@@ -1,0 +1,16 @@
+@import "~styles/theme.less";
+
+.page-container {
+  background-color: @primary-color-shade;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  .page-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}

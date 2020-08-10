@@ -1,0 +1,45 @@
+#bitbucket-pipelines.yml
+image: node:12.16.3
+
+pipelines:
+  default:
+    - step:
+        name: build
+        caches:
+          - node
+          - nodecustom
+        script:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+          - export PATH=$HOME/.yarn/bin:$PATH
+          - yarn
+          - mkdir packaged
+          - unset CI
+          - yarn build
+          - tar -czvf "packaged/omni-v8.tar.gz" -C build .
+          # - unset CI
+          # - yarn build:profarma
+          # - tar -czvf packaged/profarma.tar.gz -C build .
+        artifacts:
+          - packaged/**
+
+    - step:
+        name: feedback
+        image: alpine
+        trigger: manual
+        deployment: production
+        script:
+          - mkdir upload
+          # - mkdir upload/omni
+          # - mkdir upload/profarma
+          - tar -xf packaged/omni-v8.tar.gz -C upload
+          # - tar -xf packaged/profarma.tar.gz -C upload/profarma
+          # - echo "OMNI"
+          # - ls -la upload/omni
+          # - echo "PROFARMA"
+          # - ls -la upload/profarma
+          - apk update && apk add openssh rsync
+          - rsync -a  -e "ssh -o StrictHostKeyChecking=no" --delete upload/ $PROD_USERNAME@$PROD_HOST:home/ubuntu/frontend/omni-v8
+
+definitions:
+  caches:
+    nodecustom: ./node_modules
