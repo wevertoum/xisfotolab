@@ -1,8 +1,14 @@
 @import "~styles/theme.less";
 
 .steps-container {
-  background-color: @primary-color-shade;
-  height: 100%;
-  overflow: hidden;
   display: flex;
+  flex-direction: column;
+  .steps-content {
+    background-color: @primary-color-shade;
+    border-radius: 32px;
+    margin-top: 5%;
+    height: 80vh;
+    width: 80vw;
+    padding: 64px;
+  }
 }
