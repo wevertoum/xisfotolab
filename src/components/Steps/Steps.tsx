@@ -1,93 +1,96 @@
-import React, { useState } from "react";
+import React, {
+  ReactNode,
+  useState,
+  useMemo,
+  useEffect,
+  useReducer,
+} from "react";
 import "./Steps.less";
-import { Button, Form, Input, InputNumber, Select, Upload } from "antd";
-import { MaskedInput } from "antd-mask-input";
-import { InboxOutlined } from "@ant-design/icons";
+import { Button, Progress, message, Modal } from "antd";
+import { format } from "path";
+import { FormInstance } from "antd/lib/form";
+import Form from "antd/lib/form/Form";
+import { merge } from "lodash";
 
-const Steps = () => {
-  const [form] = Form.useForm();
-  const [step, setStep] = useState(1);
+interface Props {
+  children: ReactNode[];
+  form: FormInstance;
+}
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
+const Steps: React.FC<Props> = ({ children, form }) => {
+  const [index, setIndex] = useState(1);
+  const [errors, setErros] = useState<string[]>([]);
+
+  const [values, setValues] = useState<any>();
+  const currentStep = useMemo(() => children[index - 1], [children, index]);
+  const percent = useMemo(() => Math.floor((index / children.length) * 100), [
+    children.length,
+    index,
+  ]);
+  const isFirst = useMemo(() => index === 1, [index]);
+  const isLast = useMemo(() => index === children.length, [
+    children.length,
+    index,
+  ]);
+
+  const changeStep = (value: number) => {
+    const errors = form
+      .getFieldsError()
+      .reduce((acc, { errors }) => [...acc, ...errors], [] as string[]);
+    if (errors.length > 0) {
+      Modal.error({
+        content: (
+          <>
+            {errors.map((error) => (
+              <p>{error}</p>
+            ))}
+          </>
+        ),
+        title: "Atenção",
+      });
+    } else {
+      setIndex(index + value);
     }
-    return e && e.fileList;
+    setErros(errors);
   };
 
-  const FormStepDadosPessoais = () => {
-    return (
-      <>
-        <h3>Vamos começar com seus dados :)</h3>
-        <Form.Item label="Nome Completo" name="nome_completo">
-          <Input placeholder="insira seu nome completo" />
-        </Form.Item>
-        <Form.Item label="Email" name="email">
-          <Input placeholder="insira seu nome completo" />
-        </Form.Item>
-        <Form.Item label="Celular/WhatsApp" name="telefone">
-          <MaskedInput
-            placeholder="insira seu nome telefone"
-            mask="(11) 11111-1111"
-          />
-        </Form.Item>
-      </>
-    );
+  const toggleNext = () => {
+    form.submit();
+    changeStep(1);
+  };
+  const togglePrev = () => {
+    form.submit();
+    changeStep(-1);
   };
 
-  const FormStepDadosPedido = () => {
-    return (
-      <>
-        <h3>Agora vamos aos detalhes do pedido</h3>
-        <p>Envie as fotos para nosso whats</p>
-
-        <Form.Item label="Descrição do pedido" name="descricao">
-          <Input.TextArea rows={4} placeholder="insira a descrição do pedido" />
-        </Form.Item>
-        <Form.Item label="Quantidade de fotos" name="quantidade_fotos">
-          <InputNumber />
-        </Form.Item>
-      </>
-    );
-  };
-
-  const FormStepDadosEntrega = () => {
-    return (
-      <>
-        <h3>Agora vamos aos detalhes da entrega</h3>
-        <Form.Item
-          name="detalhes_entrega"
-          label="Detalhes da entrega"
-          hasFeedback
-          rules={[{ required: true, message: "Please select your country!" }]}
-        >
-          <Select placeholder="Selecione um tipo de entrega!">
-            <Select.Option value="correios">Correios</Select.Option>
-            <Select.Option value="retirada">Retirada</Select.Option>
-            <Select.Option value="entrega_gyn">
-              Entrega em Goiânia
-            </Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item label="Rua" name={["endereco", "rua"]}>
-          <Input placeholder="insira seu nome completo" />
-        </Form.Item>
-        <Form.Item label="CEP" name={["endereco", "cep"]}>
-          <MaskedInput mask="11111-11" />
-        </Form.Item>
-        <Form.Item label="Quantidade de fotos" name="quantidade_fotos">
-          <InputNumber />
-        </Form.Item>
-      </>
-    );
-  };
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
 
   return (
     <section className="steps-container">
       <div className="steps-content">
-        <Form layout="vertical" form={form} onFinish={console.log}>
-          <FormStepDadosEntrega />
-        </Form>
+        <Progress
+          percent={percent}
+          status={errors.length > 0 ? "exception" : "active"}
+        />
+        {index && (
+          <Form
+            onFinish={(values) => {
+              setValues((old: any) => merge(old, values));
+            }}
+            form={form}
+          >
+            {currentStep}
+          </Form>
+        )}
+
+        <Button onClick={togglePrev} disabled={isFirst}>
+          voltar
+        </Button>
+        <Button onClick={toggleNext} disabled={isLast}>
+          avançar
+        </Button>
       </div>
     </section>
   );
