@@ -9,14 +9,17 @@ import StepPedido from "components/StepPedido";
 import StepEntrega from "components/StepEntrega";
 
 const MainPage: React.FC = () => {
-  const [form] = Form.useForm();
+  const [formCadatro] = Form.useForm();
 
   return (
     <PageContainer title="Bem vindo">
-      <Steps form={form}>
-        <StepPessoais form={form} />
-        <StepPedido form={form} />
-        <StepEntrega form={form} />
+      <Steps
+        form={formCadatro}
+        onComplete={(values) => console.log("form geralzao", { values })}
+      >
+        <StepPessoais />
+        <StepPedido />
+        <StepEntrega />
       </Steps>
     </PageContainer>
   );

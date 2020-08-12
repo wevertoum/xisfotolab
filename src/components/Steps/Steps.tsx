@@ -1,13 +1,6 @@
-import React, {
-  ReactNode,
-  useState,
-  useMemo,
-  useEffect,
-  useReducer,
-} from "react";
+import React, { ReactNode, useState, useMemo } from "react";
 import "./Steps.less";
-import { Button, Progress, message, Modal } from "antd";
-import { format } from "path";
+import { Button, Progress } from "antd";
 import { FormInstance } from "antd/lib/form";
 import Form from "antd/lib/form/Form";
 import { merge } from "lodash";
@@ -15,13 +8,12 @@ import { merge } from "lodash";
 interface Props {
   children: ReactNode[];
   form: FormInstance;
+  onComplete: (values: any) => void;
 }
 
-const Steps: React.FC<Props> = ({ children, form }) => {
+const Steps: React.FC<Props> = ({ children, form, onComplete }) => {
   const [index, setIndex] = useState(1);
-  const [errors, setErros] = useState<string[]>([]);
-
-  const [values, setValues] = useState<any>();
+  const [valuesForm, setValuesForm] = useState<any>();
   const currentStep = useMemo(() => children[index - 1], [children, index]);
   const percent = useMemo(() => Math.floor((index / children.length) * 100), [
     children.length,
@@ -33,52 +25,28 @@ const Steps: React.FC<Props> = ({ children, form }) => {
     index,
   ]);
 
-  const changeStep = (value: number) => {
-    const errors = form
-      .getFieldsError()
-      .reduce((acc, { errors }) => [...acc, ...errors], [] as string[]);
-    if (errors.length > 0) {
-      Modal.error({
-        content: (
-          <>
-            {errors.map((error) => (
-              <p>{error}</p>
-            ))}
-          </>
-        ),
-        title: "Atenção",
-      });
-    } else {
-      setIndex(index + value);
-    }
-    setErros(errors);
-  };
-
-  const toggleNext = () => {
-    form.submit();
-    changeStep(1);
-  };
   const togglePrev = () => {
-    form.submit();
-    changeStep(-1);
+    setIndex(index - 1);
   };
 
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
+  const onFinish = (values: any) => {
+    setValuesForm((old: any) => merge(old, values));
+    if (!isLast) {
+      setIndex(index + 1);
+    } else {
+      onComplete(valuesForm);
+    }
+  };
 
   return (
     <section className="steps-container">
       <div className="steps-content">
-        <Progress
-          percent={percent}
-          status={errors.length > 0 ? "exception" : "active"}
-        />
+        <Progress percent={percent} showInfo={false} />
         {index && (
           <Form
-            onFinish={(values) => {
-              setValues((old: any) => merge(old, values));
-            }}
+            initialValues={valuesForm}
+            layout="vertical"
+            onFinish={(values) => onFinish(values)}
             form={form}
           >
             {currentStep}
@@ -88,9 +56,7 @@ const Steps: React.FC<Props> = ({ children, form }) => {
         <Button onClick={togglePrev} disabled={isFirst}>
           voltar
         </Button>
-        <Button onClick={toggleNext} disabled={isLast}>
-          avançar
-        </Button>
+        <Button onClick={form.submit}>{isLast ? "submeter" : "avançar"}</Button>
       </div>
     </section>
   );
