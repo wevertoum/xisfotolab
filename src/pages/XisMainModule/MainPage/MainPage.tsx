@@ -7,6 +7,7 @@ import { Form } from "antd";
 import StepPessoais from "components/StepPessoais";
 import StepPedido from "components/StepPedido";
 import StepEntrega from "components/StepEntrega";
+import StepFotos from "components/StepFotos";
 
 const MainPage: React.FC = () => {
   const [formCadatro] = Form.useForm();
@@ -17,6 +18,7 @@ const MainPage: React.FC = () => {
         form={formCadatro}
         onComplete={(values) => console.log("form geralzao", { values })}
       >
+        <StepFotos />
         <StepPessoais />
         <StepPedido />
         <StepEntrega />
