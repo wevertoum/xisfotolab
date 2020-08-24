@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./MainPage.less";
 
 import PageContainer from "components/PageContainer";
@@ -18,7 +18,7 @@ const MainPage: React.FC = () => {
         form={formCadatro}
         onComplete={(values) => console.log("form geralzao", { values })}
       >
-        <StepFotos />
+        <StepFotos cliente_key="teste" />
         <StepPessoais />
         <StepPedido />
         <StepEntrega />
@@ -27,4 +27,4 @@ const MainPage: React.FC = () => {
   );
 };
 
-export default MainPage;
+export default memo(MainPage);

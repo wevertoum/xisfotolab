@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./StepPedido.less";
 import { Form, Input, InputNumber } from "antd";
 import defaultFormRules from "utils/defaultFormRules";
@@ -26,4 +26,4 @@ const StepPedido: React.FC = () => {
   );
 };
 
-export default StepPedido;
+export default memo(StepPedido);

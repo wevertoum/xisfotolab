@@ -10,7 +10,7 @@ const PageContainer: React.FC<any> = ({ children, title }) => {
         <title>{title}</title>
       </Helmet>
       <div className="page-container">
-        <section className="page-wrapper">{children}</section>
+        <div className="page-wrapper">{children}</div>
       </div>
     </>
   );

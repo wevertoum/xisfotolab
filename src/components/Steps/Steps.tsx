@@ -4,6 +4,11 @@ import { Button, Progress } from "antd";
 import { FormInstance } from "antd/lib/form";
 import Form from "antd/lib/form/Form";
 import { merge } from "lodash";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 
 interface Props {
   children: ReactNode[];
@@ -39,7 +44,7 @@ const Steps: React.FC<Props> = ({ children, form, onComplete }) => {
   };
 
   return (
-    <section className="steps-container">
+    <div className="steps-container">
       <div className="steps-content">
         <Progress percent={percent} showInfo={false} />
         {index && (
@@ -52,13 +57,25 @@ const Steps: React.FC<Props> = ({ children, form, onComplete }) => {
             {currentStep}
           </Form>
         )}
-
-        <Button onClick={togglePrev} disabled={isFirst}>
-          voltar
-        </Button>
-        <Button onClick={form.submit}>{isLast ? "submeter" : "avançar"}</Button>
       </div>
-    </section>
+      <div className="footer-buttons">
+        <Button
+          shape="circle"
+          onClick={togglePrev}
+          disabled={isFirst}
+          type="primary"
+          icon={<ArrowLeftOutlined />}
+          size="large"
+        />
+        <Button
+          shape="circle"
+          onClick={form.submit}
+          type="primary"
+          icon={isLast ? <CheckCircleOutlined /> : <ArrowRightOutlined />}
+          size="large"
+        />
+      </div>
+    </div>
   );
 };
 

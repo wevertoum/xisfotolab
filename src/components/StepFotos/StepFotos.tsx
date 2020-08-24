@@ -1,49 +1,26 @@
 import React, { useState } from "react";
 import "./StepFotos.less";
-import { Form, Input, Upload, Modal } from "antd";
+import { Upload, Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { storage as storageFirebase } from "../../utils/firebase";
+import FadeLoading from "components/FadeLoading";
+interface Props {
+  cliente_key: string;
+}
 
-import defaultFormRules from "utils/defaultFormRules";
+type FileLocal = {
+  uid?: string;
+  size?: number;
+  name: string;
+  url: string;
+};
 
-const StepFotos: React.FC = () => {
+const StepFotos: React.FC<Props> = ({ cliente_key }) => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-2",
-      name: "image.png",
-      status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-3",
-      name: "image.png",
-      status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-4",
-      name: "image.png",
-      status: "done",
-      url:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-5",
-      name: "image.png",
-      status: "error",
-    },
-  ]);
+  const [loading, setLoading] = useState(false);
+  const [fileList, setFileList] = useState<FileLocal[]>([] as FileLocal[]);
 
   const getBase64 = (file: any) => {
     return new Promise((resolve, reject) => {
@@ -67,8 +44,6 @@ const StepFotos: React.FC = () => {
     );
   };
 
-  const handleChange = ({ fileList }: any) => setFileList(fileList);
-
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -76,20 +51,65 @@ const StepFotos: React.FC = () => {
     </div>
   );
 
+  const handleChange = (files: FileLocal[]) => {
+    if (files.length < fileList.length) {
+      setFileList(files);
+    }
+  };
+
+  const handleFireBaseUpload = (e: any) => {
+    setLoading(true);
+    const imageForReq = e.file;
+    const path = `/fotos-enviadas/${cliente_key}/${imageForReq.name}`;
+    if (imageForReq === "") {
+      message.error("Imagem inválida");
+    }
+    const uploadTask = storageFirebase.ref(path).put(imageForReq);
+    uploadTask.on(
+      "state_changed",
+      (TaskState: any) => {},
+      (err: any) => {
+        message.error("erro no upload");
+        console.error("erro no upload", err);
+      },
+      async function getUrl() {
+        const imageRef = storageFirebase.ref(path);
+        const url: string = await imageRef.getDownloadURL().catch((error) => {
+          throw error;
+        });
+        console.log("url", url);
+        setFileList((old) => [
+          ...old,
+          {
+            uid: imageForReq.uid,
+            size: imageForReq.size,
+            name: imageForReq.name || "",
+            url: url,
+          },
+        ]);
+        setLoading(false);
+      }
+    );
+  };
+
+  // {fileList.length >= 8 ? null : uploadButton}
+
   return (
     <>
+      <FadeLoading loading={loading} />
       <h3>Hora de enviasr as fotos</h3>
 
       <div className="clearfix">
         <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          accept="image/*"
+          customRequest={handleFireBaseUpload}
           listType="picture-card"
           fileList={fileList as []}
           onPreview={handlePreview}
-          onChange={handleChange}
+          onChange={({ fileList }) => handleChange(fileList as FileLocal[])}
           multiple
         >
-          {fileList.length >= 8 ? null : uploadButton}
+          {uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}

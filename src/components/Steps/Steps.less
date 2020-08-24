@@ -1,14 +1,22 @@
 @import "~styles/theme.less";
 
 .steps-container {
+  margin-top: 32px;
   display: flex;
   flex-direction: column;
+
   .steps-content {
     background-color: @primary-color-shade;
     border-radius: 32px;
-    margin-top: 5%;
     height: 80vh;
-    width: 80vw;
-    padding: 64px;
+    width: 70vh;
+    overflow-y: scroll;
+    padding: 16px 32px 16px 32px;
+  }
+  .footer-buttons {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 }

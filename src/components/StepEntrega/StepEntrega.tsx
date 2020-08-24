@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./StepEntrega.less";
 import { Form, Input, Select } from "antd";
 import { MaskedInput } from "antd-mask-input";
@@ -38,4 +38,4 @@ const StepEntrega: React.FC = () => {
   );
 };
 
-export default StepEntrega;
+export default memo(StepEntrega);

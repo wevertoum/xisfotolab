@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./StepPessoais.less";
 import { Form, Input } from "antd";
 import { MaskedInput } from "antd-mask-input";
@@ -33,4 +33,4 @@ const StepPessoais: React.FC = () => {
   );
 };
 
-export default StepPessoais;
+export default memo(StepPessoais);
