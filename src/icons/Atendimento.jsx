@@ -1,6 +1,6 @@
 import React from "react";
 
-function Icon({ size = 180 }) {
+function Icon({ size = 150 }) {
   return (
     <svg
       id="Capa_1"

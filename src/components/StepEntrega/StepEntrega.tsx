@@ -41,7 +41,7 @@ const StepEntrega: React.FC = () => {
                 name={["endereco", "cidade"]}
                 rules={entrega ? defaultFormRules : undefined}
               >
-                <Input placeholder="Digite o nome da rua" />
+                <Input placeholder="Qual a sua cidade?" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -50,7 +50,7 @@ const StepEntrega: React.FC = () => {
                 name={["endereco", "estado"]}
                 rules={entrega ? defaultFormRules : undefined}
               >
-                <Select placeholder="Selecione um tipo de entrega!">
+                <Select placeholder="Selecione o estado">
                   {estados.map(({ nome, sigla }) => (
                     <Select.Option key={nome} value={sigla}>
                       {nome}
@@ -68,7 +68,7 @@ const StepEntrega: React.FC = () => {
                 name={["endereco", "bairro"]}
                 rules={entrega ? defaultFormRules : undefined}
               >
-                <Input placeholder="Digite o nome da rua" />
+                <Input placeholder="Qual o seu bairro?" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -98,7 +98,7 @@ const StepEntrega: React.FC = () => {
                 name={["endereco", "numero"]}
                 rules={entrega ? defaultFormRules : undefined}
               >
-                <Input placeholder="Digite o numero da casa/predio" />
+                <Input placeholder="Digite o número da casa/predio" />
               </Form.Item>
             </Col>
           </Row>
