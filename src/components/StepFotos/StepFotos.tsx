@@ -3,6 +3,7 @@ import "./StepFotos.less";
 import { Upload, Modal, message, Tag, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "../../utils/firebase";
+// TODO tirar esses pontos da importacao
 import FadeLoading from "components/FadeLoading";
 import CadastroContext from "contexts/CadastroContext";
 
@@ -86,7 +87,7 @@ const StepFotos: React.FC = () => {
   return (
     <>
       <FadeLoading loading={loading} />
-      <h3 className="title-general-step">Enviar fotos</h3>
+      <h3>Enviar fotos</h3>
       <Form.Item name="quantidade_fotos" style={{ display: "none" }}>
         <Input value={fileList.length} />
       </Form.Item>

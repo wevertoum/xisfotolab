@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useContext, useState, useCallback } from "react";
 import "./MainPage.less";
 
 import PageContainer from "components/PageContainer";
@@ -11,33 +11,39 @@ import StepFotos from "components/StepFotos";
 import CadastroContext from "contexts/CadastroContext";
 import StepCheckup from "components/StepCheckup";
 import FadeLoading from "components/FadeLoading";
+import { collection } from "../../../utils/firebase";
+import firebase from "firebase";
 
 const MainPage: React.FC = () => {
   const [formCadatro] = Form.useForm();
   const { fileList, clienteEmail } = useContext(CadastroContext);
   const [loading, setLoading] = useState(false);
 
+  const salvarPedido = useCallback(async (payload: any) => {
+    const pedido: any = {
+      ...payload,
+      data_pedido: firebase.firestore.Timestamp.now(),
+    };
+    await collection("pedidos-solicitados").add({ ...pedido });
+  }, []);
+
   const submitTask = (values: Models.FileLocal[]) => {
     try {
       setLoading(true);
+      message.success("Pedido enviado com sucesso");
+      salvarPedido({
+        ...values,
+        fotografias: fileList,
+        email: clienteEmail,
+        quantidade_fotos: fileList.length,
+      });
+    } catch (err) {
+      message.error("Algo deu errado :/");
+    } finally {
       setTimeout(() => {
         setLoading(false);
-        message.success("Pedido enviado com sucesso");
-        console.log(
-          JSON.stringify({
-            ...values,
-            fotografias: fileList,
-            email: clienteEmail,
-            quantidade_fotos: fileList.length,
-          })
-        );
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        window.location.reload();
       }, 4000);
-    } catch (err) {
-      setLoading(false);
-      message.error("Algo deu errado :/");
     }
   };
 

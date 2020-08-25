@@ -6,7 +6,7 @@ import defaultFormRules from "utils/defaultFormRules";
 const StepPedido: React.FC = () => {
   return (
     <>
-      <h3 className="title-general-step">Detalhes do pedido</h3>
+      <h3>Detalhes do pedido</h3>
       <Form.Item
         label="Descrição do pedido"
         name="descricao"

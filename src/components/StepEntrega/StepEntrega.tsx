@@ -11,7 +11,7 @@ const StepEntrega: React.FC = () => {
   const entrega = useMemo(() => detalhe === "entrega", [detalhe]);
   return (
     <>
-      <h3 className="title-general-step">
+      <h3>
         Agora vamos aos detalhes da entrega
       </h3>
       <Form.Item
@@ -118,7 +118,7 @@ const StepEntrega: React.FC = () => {
       ) : (
         <div className="image-retirada" style={{}}>
           <Atendimento />
-          <h3 className="title-general-step">
+          <h3>
             Ok! Vamos combinar a entrega :D
           </h3>
         </div>

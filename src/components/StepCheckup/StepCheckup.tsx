@@ -8,7 +8,7 @@ const StepCheckup: React.FC = () => {
 
   return (
     <>
-      <h3 className="title-general-step">
+      <h3>
         Confira alguns dados e confirme o pedido
       </h3>
       <div className="item-check">
