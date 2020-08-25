@@ -7,13 +7,16 @@ import {
 } from "react-router-dom";
 import MainPage from "../pages/XisMainModule/MainPage";
 import LoginPage from "../pages/XisMainModule/LoginPage";
+import { CadastroProvider } from "contexts/CadastroContext";
 
 const MainRouter: React.FC = () => {
   return (
     <Router>
       <Switch>
         <Route path="/home">
-          <MainPage />
+          <CadastroProvider>
+            <MainPage />
+          </CadastroProvider>
         </Route>
 
         <Redirect exact from="/" to="home" />

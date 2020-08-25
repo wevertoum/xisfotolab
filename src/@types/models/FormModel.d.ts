@@ -7,10 +7,10 @@ namespace Models {
     email: string;
     telefone: string;
     descricao: string;
-    quantidade_fotos: string;
     detalhes_entrega: string;
-    endereco: Endereco;
-    pagamento: "transferencia" | "picpay" | "dinheiro";
+    endereco?: Endereco;
+    quantidade_fotos: number;
+    fotografias: FileLocal[];
   }
 
   interface Endereco {
@@ -21,5 +21,11 @@ namespace Models {
     cep: string;
     numero: string;
     complemento: string;
+  }
+  interface FileLocal {
+    uid?: string;
+    size?: number;
+    name: string;
+    url: string;
   }
 }

@@ -1,26 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./StepFotos.less";
-import { Upload, Modal, message, Tag } from "antd";
+import { Upload, Modal, message, Tag, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "../../utils/firebase";
 import FadeLoading from "components/FadeLoading";
-interface Props {
-  cliente_key: string;
-}
+import CadastroContext from "contexts/CadastroContext";
 
-type FileLocal = {
-  uid?: string;
-  size?: number;
-  name: string;
-  url: string;
-};
-
-const StepFotos: React.FC<Props> = ({ cliente_key }) => {
+const StepFotos: React.FC = () => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const [fileList, setFileList] = useState<FileLocal[]>([] as FileLocal[]);
+  const { fileList, setFileList, clienteEmail } = useContext(CadastroContext);
 
   const getBase64 = (file: any) => {
     return new Promise((resolve, reject) => {
@@ -51,7 +42,7 @@ const StepFotos: React.FC<Props> = ({ cliente_key }) => {
     </div>
   );
 
-  const handleChange = (files: FileLocal[]) => {
+  const handleChange = (files: Models.FileLocal[]) => {
     if (files.length < fileList.length) {
       setFileList(files);
     }
@@ -60,7 +51,7 @@ const StepFotos: React.FC<Props> = ({ cliente_key }) => {
   const handleFireBaseUpload = (e: any) => {
     setLoading(true);
     const imageForReq = e.file;
-    const path = `/fotos-enviadas/${cliente_key}/${imageForReq.name}`;
+    const path = `/fotos-enviadas/${clienteEmail}/${imageForReq.name}`;
     if (imageForReq === "") {
       message.error("Imagem inválida");
     }
@@ -78,7 +69,7 @@ const StepFotos: React.FC<Props> = ({ cliente_key }) => {
           throw error;
         });
         console.log("url", url);
-        setFileList((old) => [
+        setFileList((old: any) => [
           ...old,
           {
             uid: imageForReq.uid,
@@ -92,12 +83,18 @@ const StepFotos: React.FC<Props> = ({ cliente_key }) => {
     );
   };
 
-  // {fileList.length >= 8 ? null : uploadButton}
-
   return (
     <>
       <FadeLoading loading={loading} />
       <h3 className="title-general-step">Enviar fotos</h3>
+      <Form.Item name="quantidade_fotos" style={{ display: "none" }}>
+        <Input value={fileList.length} />
+      </Form.Item>
+
+      <Form.Item name="fotografias" style={{ display: "none" }}>
+        <Input value={JSON.stringify(fileList)} />
+      </Form.Item>
+
       {fileList.length > 0 && (
         <div className="tag-qtd">
           <Tag color="orange">Quantidade: {fileList.length}</Tag>
@@ -111,11 +108,14 @@ const StepFotos: React.FC<Props> = ({ cliente_key }) => {
           listType="picture-card"
           fileList={fileList as []}
           onPreview={handlePreview}
-          onChange={({ fileList }) => handleChange(fileList as FileLocal[])}
+          onChange={({ fileList }) =>
+            handleChange(fileList as Models.FileLocal[])
+          }
           multiple
         >
           {uploadButton}
         </Upload>
+
         <Modal
           visible={previewVisible}
           title={previewTitle}
