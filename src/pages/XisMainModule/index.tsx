@@ -1,7 +1,7 @@
 import MainPage from "./MainPage";
-import AnotherPage from "./AnotherPage";
+import LoginPage from "./LoginPage";
 
 export default {
   MainPage,
-  AnotherPage,
+  LoginPage,
 };

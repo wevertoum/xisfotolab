@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import MainPage from "../pages/XisMainModule/MainPage";
-import AnotherPage from "../pages/XisMainModule/AnotherPage";
+import LoginPage from "../pages/XisMainModule/LoginPage";
 
 const MainRouter: React.FC = () => {
   return (
@@ -18,8 +18,8 @@ const MainRouter: React.FC = () => {
 
         <Redirect exact from="/" to="home" />
 
-        <Route path="/anotherPage">
-          <AnotherPage />
+        <Route path="/login">
+          <LoginPage />
         </Route>
       </Switch>
     </Router>

@@ -22,8 +22,6 @@ const options = {
   generateOnce: false, // generate color.less on each compilation
 };
 
-const isOmni = process.env.REACT_APP_EMPRESA === "omni";
-
 module.exports = override(
   fixBabelImports("import", {
     libraryName: "antd",
@@ -33,9 +31,5 @@ module.exports = override(
   addWebpackPlugin(new AntDesignThemePlugin(options)),
   addLessLoader({
     javascriptEnabled: true,
-    modifyVars: {
-      "@primary-color": "#00A8FF",
-      "@secondary-color": "#2a5e9c",
-    },
   })
 );

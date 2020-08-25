@@ -4,19 +4,40 @@
   margin-top: 32px;
   display: flex;
   flex-direction: column;
-
+  width: 80%;
+  .logo-content {
+    display: flex;
+    justify-content: center;
+    img {
+      box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.05);
+      margin-bottom: 32px;
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+    }
+  }
   .steps-content {
-    background-color: @primary-color-shade;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.05);
+    background-color: white;
     border-radius: 32px;
-    height: 80vh;
-    width: 70vh;
-    overflow-y: scroll;
+    height: 60vh;
+    max-height: 60vh;
+    width: 100%;
+    overflow-y: scroll !important;
     padding: 16px 32px 16px 32px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   .footer-buttons {
-    margin-top: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
+}
+
+.ant-progress-bg {
+  background: var(--primary-color) !important;
 }

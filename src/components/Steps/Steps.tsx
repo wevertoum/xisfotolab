@@ -45,6 +45,9 @@ const Steps: React.FC<Props> = ({ children, form, onComplete }) => {
 
   return (
     <div className="steps-container">
+      <div className="logo-content">
+        <img src="xis_logo.jpg" alt="logo xis foto lab" />
+      </div>
       <div className="steps-content">
         <Progress percent={percent} showInfo={false} />
         {index && (

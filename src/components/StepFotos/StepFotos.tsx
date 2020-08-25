@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./StepFotos.less";
-import { Upload, Modal, message } from "antd";
+import { Upload, Modal, message, Tag } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "../../utils/firebase";
 import FadeLoading from "components/FadeLoading";
@@ -97,7 +97,12 @@ const StepFotos: React.FC<Props> = ({ cliente_key }) => {
   return (
     <>
       <FadeLoading loading={loading} />
-      <h3>Hora de enviasr as fotos</h3>
+      <h3 className="title-general-step">Enviar fotos</h3>
+      {fileList.length > 0 && (
+        <div className="tag-qtd">
+          <Tag color="orange">Quantidade: {fileList.length}</Tag>
+        </div>
+      )}
 
       <div className="clearfix">
         <Upload
