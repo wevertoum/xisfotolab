@@ -63,6 +63,7 @@ const StepFotos: React.FC = () => {
       (err: any) => {
         message.error("erro no upload");
         console.error("erro no upload", err);
+        setLoading(false);
       },
       async function getUrl() {
         const imageRef = storageFirebase.ref(path);

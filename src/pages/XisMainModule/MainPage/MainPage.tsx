@@ -3,7 +3,7 @@ import "./MainPage.less";
 
 import PageContainer from "components/PageContainer";
 import Steps from "components/Steps";
-import { Form, message } from "antd";
+import { Form, Modal, Result, Button } from "antd";
 import StepPessoais from "components/StepPessoais";
 import StepPedido from "components/StepPedido";
 import StepEntrega from "components/StepEntrega";
@@ -27,23 +27,43 @@ const MainPage: React.FC = () => {
     await collection("pedidos-solicitados").add({ ...pedido });
   }, []);
 
-  const submitTask = (values: Models.FileLocal[]) => {
+  const submitTask = async (values: Models.FileLocal[]) => {
     try {
       setLoading(true);
-      message.success("Pedido enviado com sucesso");
-      salvarPedido({
+      await salvarPedido({
         ...values,
         fotografias: fileList,
         email: clienteEmail,
         quantidade_fotos: fileList.length,
       });
+      Modal.success({
+        centered: true,
+        onOk: () => window.location.reload(),
+        content: (
+          <>
+            <Result
+              status="success"
+              title="Tudo certo!"
+              subTitle="Já recebemos seu pedido, logo entraremos em contato."
+            />
+          </>
+        ),
+      });
     } catch (err) {
-      message.error("Algo deu errado :/");
+      Modal.error({
+        centered: true,
+        content: (
+          <>
+            <Result
+              status="500"
+              title="500"
+              subTitle="Ops! Algo deu errado :/"
+            />
+          </>
+        ),
+      });
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-        window.location.reload();
-      }, 4000);
+      setLoading(false);
     }
   };
 
