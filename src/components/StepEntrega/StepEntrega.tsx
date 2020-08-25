@@ -50,7 +50,7 @@ const StepEntrega: React.FC = () => {
                 name={["endereco", "estado"]}
                 rules={entrega ? defaultFormRules : undefined}
               >
-                <Select placeholder="Selecione o estado">
+                <Select placeholder="Selecione">
                   {estados.map(({ nome, sigla }) => (
                     <Select.Option key={nome} value={sigla}>
                       {nome}
