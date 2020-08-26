@@ -17,7 +17,7 @@ const PerfilAdmin: React.FC = () => {
   }, [history]);
 
   return (
-    <Card className="display-fase-selecionada" title="Perfil do usuário">
+    <Card className="display-card-perfil" title="Perfil do usuário">
       <div className="logo-content">
         <img src={user.foto_perfil} alt="logo xis foto lab" />
       </div>

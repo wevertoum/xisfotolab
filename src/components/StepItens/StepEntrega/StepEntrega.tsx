@@ -1,19 +1,19 @@
-import React, { memo, useState, useMemo } from "react";
+import React, { memo, useState, useMemo, useContext } from "react";
 import "./StepEntrega.less";
 import { Form, Input, Select, Row, Col } from "antd";
 import { MaskedInput } from "antd-mask-input";
 import defaultFormRules from "utils/defaultFormRules";
 import estados from "utils/estados";
 import Atendimento from "icons/Atendimento";
+import CadastroContext from "contexts/CadastroContext";
 
 const StepEntrega: React.FC = () => {
   const [detalhe, setDetalhe] = useState("entrega");
   const entrega = useMemo(() => detalhe === "entrega", [detalhe]);
+  const { setDetalheEntrega } = useContext(CadastroContext);
   return (
     <>
-      <h3>
-        Agora vamos aos detalhes da entrega
-      </h3>
+      <h3>Agora vamos aos detalhes da entrega</h3>
       <Form.Item
         name="detalhes_entrega"
         label="Detalhes da entrega"
@@ -21,7 +21,10 @@ const StepEntrega: React.FC = () => {
       >
         <Select
           placeholder="Selecione um tipo de entrega!"
-          onChange={(e) => setDetalhe(e as string)}
+          onChange={(e) => {
+            setDetalhe(e as string);
+            setDetalheEntrega(e as string);
+          }}
         >
           <Select.Option value="entrega">
             Desejo Receber a Encomenda
@@ -118,9 +121,7 @@ const StepEntrega: React.FC = () => {
       ) : (
         <div className="image-retirada" style={{}}>
           <Atendimento />
-          <h3>
-            Ok! Vamos combinar a entrega
-          </h3>
+          <h3>Ok! Vamos combinar a entrega</h3>
         </div>
       )}
     </>

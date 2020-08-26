@@ -8,10 +8,21 @@ export const CadastroProvider: React.FC<Props> = ({ children }) => {
     [] as Models.FileLocal[]
   );
   const [clienteEmail, setClienteEmail] = useState("");
+  const [detalheEntrega, setDetalheEntrega] = useState("");
+  const [telefoneCliente, setTelefoneCliente] = useState("");
 
   return (
     <CadastroContext.Provider
-      value={{ fileList, setFileList, clienteEmail, setClienteEmail }}
+      value={{
+        fileList,
+        setFileList,
+        clienteEmail,
+        setClienteEmail,
+        detalheEntrega,
+        setDetalheEntrega,
+        telefoneCliente,
+        setTelefoneCliente,
+      }}
     >
       {children}
     </CadastroContext.Provider>

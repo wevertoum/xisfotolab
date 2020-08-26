@@ -6,6 +6,7 @@ import useMountEffect from "hooks/lifecycle/useMountEffect";
 import { collection } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
 import Display from "components/Display";
+import TagListFotos from "components/TagListFotos";
 const { Panel } = Collapse;
 
 interface Props {
@@ -98,6 +99,11 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
                   </Col>
                 </Row>
               )}
+              <Row gutter={16}>
+                <Col span={24}>
+                  <TagListFotos fotos={pedido.fotografias} />
+                </Col>
+              </Row>
             </Panel>
           </Collapse>
         ))

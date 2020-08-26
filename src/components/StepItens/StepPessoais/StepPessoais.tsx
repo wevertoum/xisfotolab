@@ -6,7 +6,7 @@ import defaultFormRules from "utils/defaultFormRules";
 import CadastroContext from "contexts/CadastroContext";
 
 const StepPessoais: React.FC = () => {
-  const { setClienteEmail } = useContext(CadastroContext);
+  const { setClienteEmail, setTelefoneCliente } = useContext(CadastroContext);
   return (
     <>
       <h3>Vamos começar com seus dados :)</h3>
@@ -30,6 +30,7 @@ const StepPessoais: React.FC = () => {
         rules={defaultFormRules}
       >
         <MaskedInput
+          onChange={(e) => setTelefoneCliente(e.target.value)}
           placeholder="insira seu número de telefone"
           mask="(11) 11111-1111"
         />

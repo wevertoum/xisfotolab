@@ -7,5 +7,9 @@ namespace Contexts {
     setFileList: Dispatch<SetStateAction<Models.FileList[]>>;
     clienteEmail: string;
     setClienteEmail: Dispatch<SetStateAction<string>>;
+    detalheEntrega: string;
+    setDetalheEntrega: Dispatch<SetStateAction<string>>;
+    telefoneCliente: string;
+    setTelefoneCliente: Dispatch<SetStateAction<string>>;
   }
 }
