@@ -90,10 +90,10 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
                       } - ${pedido.endereco.estado}, ${
                         pedido.endereco.bairro || "(bairro nao informado)"
                       }, ${pedido.endereco.rua || "(rua não informada)"}, ${
-                        pedido.endereco.cep || "(cep não informado)"
-                      }, ${
                         pedido.endereco.complemento ||
                         "(complemento não informado)"
+                      }, Nº ${pedido.endereco.numero || "numero"} CEP ${
+                        pedido.endereco.cep || "(cep não informado)"
                       }`}
                     </Display>
                   </Col>
