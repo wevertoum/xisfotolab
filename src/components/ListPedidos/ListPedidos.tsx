@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState, useEffect } from "react";
 import "./ListPedidos.less";
-import { message, Collapse, Row, Col, Result } from "antd";
+import { Collapse, Row, Col, Result } from "antd";
 
 import useMountEffect from "hooks/lifecycle/useMountEffect";
 import { collection } from "utils/firebase";
@@ -22,17 +22,16 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
   const buscarLista = useCallback(async () => {
     setLoading(true);
     await collection(colection)
-      .get()
-      .then((snapshot) => {
+      .orderBy("data_pedido", "desc")
+      .limit(30)
+      //TODO implementar um estado que altera esse limite somando + 10 no limite do scroll
+      .onSnapshot((snapshot) => {
         const lista: Models.FormModel[] = snapshot.docs.map((doc) =>
           doc.data()
         ) as Models.FormModel[];
         setListPedidos(lista);
-      })
-      .catch(() => {
-        message.error(`erro ao carregar lista de ${colection}`);
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   }, [colection]);
 
   useMountEffect(async () => buscarLista());
