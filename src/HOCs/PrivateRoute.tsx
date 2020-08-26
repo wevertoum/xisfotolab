@@ -55,11 +55,6 @@ const PrivateRoute: React.FC<Props & RouteProps> = ({
             status="403"
             title="403"
             subTitle="Você não tem autorização pra acessar essa página :/"
-            extra={
-              <Button type="primary" onClick={() => history.goBack()}>
-                Voltar
-              </Button>
-            }
           />
         </Space>
       )}

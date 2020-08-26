@@ -7,6 +7,7 @@ import { auth, collection } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
 import UserContext from "contexts/UserContext";
 import { useHistory } from "react-router-dom";
+import { LoginOutlined } from "@ant-design/icons";
 
 const LoginPage: React.FC = () => {
   const [form] = Form.useForm();
@@ -76,10 +77,10 @@ const LoginPage: React.FC = () => {
     <PageContainer title="login">
       <FadeLoading loading={loading} />
       <div className="background">
-        <div className="logo-content">
-          <img src="xis_logo.jpg" alt="logo xis foto lab" />
-        </div>
         <article className="login-form-wrapper">
+          <div className="logo-content">
+            <img src="xis_logo.jpg" alt="logo xis foto lab" />
+          </div>
           <Form
             form={form}
             className="login-form"
@@ -112,6 +113,7 @@ const LoginPage: React.FC = () => {
                 onClick={form.submit}
                 size="large"
                 disabled={loading}
+                icon={<LoginOutlined />}
               >
                 Fazer login
               </Button>
