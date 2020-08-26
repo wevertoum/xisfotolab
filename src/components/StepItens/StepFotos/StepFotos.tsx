@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, memo } from "react";
 import "./StepFotos.less";
 import { Upload, Modal, message, Tag, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { storage as storageFirebase } from "../../utils/firebase";
-// TODO tirar esses pontos da importacao
+import { storage as storageFirebase } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
 import CadastroContext from "contexts/CadastroContext";
 
@@ -133,4 +132,4 @@ const StepFotos: React.FC = () => {
   );
 };
 
-export default StepFotos;
+export default memo(StepFotos);

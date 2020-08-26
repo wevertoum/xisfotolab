@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -36,4 +36,4 @@ const MainRouter: React.FC = () => {
   );
 };
 
-export default MainRouter;
+export default memo(MainRouter);

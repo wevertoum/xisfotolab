@@ -7,7 +7,7 @@ namespace Models {
     email: string;
     telefone: string;
     descricao: string;
-    detalhes_entrega: string;
+    detalhes_entrega: "retirada" | "entrega";
     endereco?: Endereco;
     quantidade_fotos: number;
     fotografias: FileLocal[];

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./PageContainer.less";
 
 import { Helmet } from "react-helmet";
@@ -16,4 +16,4 @@ const PageContainer: React.FC<any> = ({ children, title }) => {
   );
 };
 
-export default PageContainer;
+export default memo(PageContainer);

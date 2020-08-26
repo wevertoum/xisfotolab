@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useMemo } from "react";
+import React, { ReactNode, useState, useMemo, memo } from "react";
 import "./Steps.less";
 import { Button, Progress } from "antd";
 import { FormInstance } from "antd/lib/form";
@@ -82,4 +82,4 @@ const Steps: React.FC<Props> = ({ children, form, onComplete }) => {
   );
 };
 
-export default Steps;
+export default memo(Steps);

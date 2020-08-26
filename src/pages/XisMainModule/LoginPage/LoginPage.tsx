@@ -16,30 +16,33 @@ const LoginPage: React.FC = () => {
 
   const navigate = useCallback(() => history.replace(`/admin`), [history]);
 
-  const buscarUsuario = useCallback(async (id: string) => {
-    await collection("usuarios")
-      .doc(id)
-      .get()
-      .then((snapshot) => {
-        const user: Models.User = snapshot.data() as Models.User;
-        setUser(user);
-        navigate();
-      })
-      .catch(() => {
-        Modal.error({
-          centered: true,
-          content: (
-            <>
-              <Result
-                status="500"
-                title="Erro ao carregar dados!"
-                subTitle="Tente novamente mais tarde!"
-              />
-            </>
-          ),
+  const buscarUsuario = useCallback(
+    async (id: string) => {
+      await collection("usuarios")
+        .doc(id)
+        .get()
+        .then((snapshot) => {
+          const user: Models.User = snapshot.data() as Models.User;
+          setUser(user);
+          navigate();
+        })
+        .catch(() => {
+          Modal.error({
+            centered: true,
+            content: (
+              <>
+                <Result
+                  status="500"
+                  title="Erro ao carregar dados!"
+                  subTitle="Tente novamente mais tarde!"
+                />
+              </>
+            ),
+          });
         });
-      });
-  }, []);
+    },
+    [navigate, setUser]
+  );
 
   const loginHandler = useCallback(
     async ({ email, password }) => {

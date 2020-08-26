@@ -4,14 +4,14 @@ import "./PedidoPage.less";
 import PageContainer from "components/PageContainer";
 import Steps from "components/Steps";
 import { Form, Modal, Result } from "antd";
-import StepPessoais from "components/StepPessoais";
-import StepPedido from "components/StepPedido";
-import StepEntrega from "components/StepEntrega";
-import StepFotos from "components/StepFotos";
+import StepPessoais from "components/StepItens/StepPessoais";
+import StepPedido from "components/StepItens/StepPedido";
+import StepEntrega from "components/StepItens/StepEntrega";
+import StepFotos from "components/StepItens/StepFotos";
 import CadastroContext from "contexts/CadastroContext";
-import StepCheckup from "components/StepCheckup";
+import StepCheckup from "components/StepItens/StepCheckup";
 import FadeLoading from "components/FadeLoading";
-import { collection } from "../../../utils/firebase";
+import { collection } from "utils/firebase";
 import firebase from "firebase";
 
 const PedidoPage: React.FC = () => {
