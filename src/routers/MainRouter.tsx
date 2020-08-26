@@ -5,25 +5,32 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import MainPage from "../pages/XisMainModule/MainPage";
-import LoginPage from "../pages/XisMainModule/LoginPage";
 import { CadastroProvider } from "contexts/CadastroContext";
+import { UserProvider } from "contexts/UserContext";
+import PedidoPage from "pages/XisMainModule/PedidoPage";
+import LoginPage from "pages/XisMainModule/LoginPage";
+import PrivateRoute from "HOCs/PrivateRoute";
+
+const AdminPage = React.lazy(() => import("../pages/XisMainModule/AdminPage"));
 
 const MainRouter: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/home">
+        <Redirect exact from="/" to="pedido" />
+
+        <Route path="/pedido">
           <CadastroProvider>
-            <MainPage />
+            <PedidoPage />
           </CadastroProvider>
         </Route>
 
-        <Redirect exact from="/" to="home" />
-
-        <Route path="/login">
-          <LoginPage />
-        </Route>
+        <UserProvider>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <PrivateRoute lazy path="/admin" component={AdminPage} />
+        </UserProvider>
       </Switch>
     </Router>
   );

@@ -1,9 +1,9 @@
 import React, { memo, useContext, useState, useCallback } from "react";
-import "./MainPage.less";
+import "./PedidoPage.less";
 
 import PageContainer from "components/PageContainer";
 import Steps from "components/Steps";
-import { Form, Modal, Result, Button } from "antd";
+import { Form, Modal, Result } from "antd";
 import StepPessoais from "components/StepPessoais";
 import StepPedido from "components/StepPedido";
 import StepEntrega from "components/StepEntrega";
@@ -14,7 +14,7 @@ import FadeLoading from "components/FadeLoading";
 import { collection } from "../../../utils/firebase";
 import firebase from "firebase";
 
-const MainPage: React.FC = () => {
+const PedidoPage: React.FC = () => {
   const [formCadatro] = Form.useForm();
   const { fileList, clienteEmail } = useContext(CadastroContext);
   const [loading, setLoading] = useState(false);
@@ -84,4 +84,4 @@ const MainPage: React.FC = () => {
   );
 };
 
-export default memo(MainPage);
+export default memo(PedidoPage);

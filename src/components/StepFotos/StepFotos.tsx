@@ -26,11 +26,13 @@ const StepFotos: React.FC = () => {
   const handleCancel = () => setPreviewVisible(false);
 
   const handlePreview = async (file: any) => {
+    setLoading(true);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
     setPreviewImage(file.url || file.preview);
     setPreviewVisible(true);
+    setLoading(false);
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );

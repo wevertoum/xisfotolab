@@ -119,7 +119,7 @@ const StepEntrega: React.FC = () => {
         <div className="image-retirada" style={{}}>
           <Atendimento />
           <h3>
-            Ok! Vamos combinar a entrega :D
+            Ok! Vamos combinar a entrega
           </h3>
         </div>
       )}

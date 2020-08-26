@@ -1,7 +1,9 @@
-import MainPage from "./MainPage";
+import PedidoPage from "./PedidoPage";
 import LoginPage from "./LoginPage";
+import AdminPage from "./AdminPage";
 
 export default {
-  MainPage,
+  PedidoPage,
   LoginPage,
+  AdminPage,
 };
