@@ -19,12 +19,13 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
     [] as Models.FormModel[]
   );
 
+  //TODO implementar um estado que altera esse limite somando + 10 no limite do scroll
+
   const buscarLista = useCallback(async () => {
     setLoading(true);
     await collection(colection)
       .orderBy("data_pedido", "desc")
       .limit(30)
-      //TODO implementar um estado que altera esse limite somando + 10 no limite do scroll
       .onSnapshot((snapshot) => {
         const lista: Models.FormModel[] = snapshot.docs.map((doc) =>
           doc.data()

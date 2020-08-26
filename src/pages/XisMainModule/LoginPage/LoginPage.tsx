@@ -18,6 +18,7 @@ const LoginPage: React.FC = () => {
 
   const buscarUsuario = useCallback(
     async (id: string) => {
+      setLoading(true);
       await collection("usuarios")
         .doc(id)
         .get()
@@ -39,7 +40,8 @@ const LoginPage: React.FC = () => {
               </>
             ),
           });
-        });
+        })
+        .finally(() => setLoading(false));
     },
     [navigate, setUser]
   );
