@@ -92,7 +92,7 @@ const StepEntrega: React.FC = () => {
                 name={["endereco", "cep"]}
                 rules={entrega ? defaultFormRules : undefined}
               >
-                <MaskedInput mask="11111-11" />
+                <MaskedInput mask="11111-111" />
               </Form.Item>
             </Col>
             <Col span={12}>
