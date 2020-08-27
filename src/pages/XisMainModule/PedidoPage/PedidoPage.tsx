@@ -30,25 +30,40 @@ const PedidoPage: React.FC = () => {
   const submitTask = async (values: Models.FileLocal[]) => {
     try {
       setLoading(true);
-      await salvarPedido({
-        ...values,
-        fotografias: fileList,
-        email: clienteEmail,
-        quantidade_fotos: fileList.length,
-      });
-      Modal.success({
-        centered: true,
-        onOk: () => window.location.reload(),
-        content: (
-          <>
-            <Result
-              status="success"
-              title="Tudo certo!"
-              subTitle="Já recebemos seu pedido, logo entraremos em contato."
-            />
-          </>
-        ),
-      });
+      if (fileList.length > 0) {
+        await salvarPedido({
+          ...values,
+          fotografias: fileList,
+          email: clienteEmail,
+          quantidade_fotos: fileList.length,
+        });
+        Modal.success({
+          centered: true,
+          onOk: () => window.location.reload(),
+          content: (
+            <>
+              <Result
+                status="success"
+                title="Tudo certo!"
+                subTitle="Já recebemos seu pedido, logo entraremos em contato."
+              />
+            </>
+          ),
+        });
+      } else {
+        Modal.warning({
+          centered: true,
+          content: (
+            <>
+              <Result
+                status="500"
+                title="Ops! Só mais uma coisa"
+                subTitle="Precisamos que você mande pelo menos uma foto pra fazer o pedido :)"
+              />
+            </>
+          ),
+        });
+      }
     } catch (err) {
       Modal.error({
         centered: true,

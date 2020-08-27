@@ -1,6 +1,6 @@
 import React, { useContext, memo, Suspense } from "react";
-import { Route, RouteProps, useHistory } from "react-router-dom";
-import { Result, Button, Space } from "antd";
+import { Route, RouteProps } from "react-router-dom";
+import { Result, Space } from "antd";
 import UserContext from "contexts/UserContext";
 import FadeLoading from "components/FadeLoading";
 
@@ -16,8 +16,6 @@ const PrivateRoute: React.FC<Props & RouteProps> = ({
   ...routeProps
 }) => {
   const { user } = useContext(UserContext);
-
-  const history = useHistory();
 
   // const logout = useCallback(() => {
   //   localStorage.clear();

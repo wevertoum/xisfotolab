@@ -1,5 +1,6 @@
 import React, { memo, useMemo, useCallback } from "react";
 import "./TagListFotos.less";
+import axios from "axios";
 
 import { Tag, Avatar, Popover, Space } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
@@ -18,6 +19,21 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
   if (tags.length === 0) {
     return <></>;
   }
+
+  const download = (url: string, name: string) => {
+    axios({
+      url: url,
+      method: "GET",
+      responseType: "blob",
+    }).then((response: any) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", name);
+      document.body.appendChild(link);
+      link.click();
+    });
+  };
 
   return (
     <>
@@ -43,6 +59,7 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
         >
           <Tag
             color="blue"
+            onClick={() => download(url, name)}
             icon={
               url ? (
                 <Avatar

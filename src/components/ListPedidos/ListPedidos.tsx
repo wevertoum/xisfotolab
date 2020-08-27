@@ -84,7 +84,7 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
                 <Row gutter={16}>
                   <Col span={24}>
                     <Display>
-                      Detalhe Entrega
+                      Endereço
                       {`${
                         pedido.endereco.cidade || "(cidade não informada)"
                       } - ${pedido.endereco.estado}, ${
@@ -92,7 +92,7 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
                       }, ${pedido.endereco.rua || "(rua não informada)"}, ${
                         pedido.endereco.complemento ||
                         "(complemento não informado)"
-                      }, Nº ${pedido.endereco.numero || "numero"} CEP ${
+                      }, Nº ${pedido.endereco.numero || "numero"}, CEP ${
                         pedido.endereco.cep || "(cep não informado)"
                       }`}
                     </Display>
@@ -101,7 +101,18 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
               )}
               <Row gutter={16}>
                 <Col span={24}>
-                  <TagListFotos fotos={pedido.fotografias} />
+                  <Display>
+                    Detalhes pedido
+                    {pedido.descricao}
+                  </Display>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={24}>
+                  <Display>
+                    Fotos
+                    <TagListFotos fotos={pedido.fotografias} />
+                  </Display>
                 </Col>
               </Row>
             </Panel>
