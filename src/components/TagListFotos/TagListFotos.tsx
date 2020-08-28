@@ -58,6 +58,7 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
           trigger="hover"
         >
           <Tag
+            className="tag-foto-item"
             color="blue"
             onClick={() => download(url, name)}
             icon={

@@ -1,6 +1,6 @@
 import React, { useState, useContext, memo } from "react";
 import "./StepFotos.less";
-import { Upload, Modal, message, Tag, Form, Input } from "antd";
+import { Upload, Modal, message, Tag, Form, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
@@ -36,13 +36,6 @@ const StepFotos: React.FC = () => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div className="ant-upload-text">Upload</div>
-    </div>
-  );
 
   const handleChange = (files: Models.FileLocal[]) => {
     if (files.length < fileList.length) {
@@ -108,7 +101,7 @@ const StepFotos: React.FC = () => {
         <Upload
           accept="image/*"
           customRequest={handleFireBaseUpload}
-          listType="picture-card"
+          listType="picture"
           fileList={fileList as []}
           onPreview={handlePreview}
           onChange={({ fileList }) =>
@@ -116,7 +109,12 @@ const StepFotos: React.FC = () => {
           }
           multiple
         >
-          {uploadButton}
+          <Button
+            icon={<PlusOutlined />}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            clique para enviar fotos
+          </Button>
         </Upload>
 
         <Modal
