@@ -20,11 +20,14 @@ const PedidoPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const salvarPedido = useCallback(async (payload: any) => {
+    const pedidosRef = collection("pedidos-solicitados");
     const pedido: any = {
       ...payload,
       data_pedido: firebase.firestore.Timestamp.now(),
     };
-    await collection("pedidos-solicitados").add({ ...pedido });
+    const ref = await pedidosRef.add({ ...pedido });
+    await pedidosRef.doc(ref.id).update({ id: ref.id });
+    return ref;
   }, []);
 
   const submitTask = async (values: Models.FileLocal[]) => {

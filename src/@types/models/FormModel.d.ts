@@ -3,6 +3,7 @@
 
 namespace Models {
   interface FormModel {
+    id?: string;
     nome_completo: string;
     email: string;
     telefone: string;
@@ -27,5 +28,6 @@ namespace Models {
     size?: number;
     name: string;
     url: string;
+    descricao?: string;
   }
 }

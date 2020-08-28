@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState, useEffect } from "react";
 import "./ListPedidos.less";
-import { Collapse, Row, Col, Result } from "antd";
+import { Collapse, Row, Col, Result, Select } from "antd";
 
 import useMountEffect from "hooks/lifecycle/useMountEffect";
 import { collection } from "utils/firebase";
@@ -9,12 +9,31 @@ import Display from "components/Display";
 import TagListFotos from "components/TagListFotos";
 const { Panel } = Collapse;
 
+const collectionsPedidos = [
+  {
+    collectionRef: "pedidos-solicitados",
+    name: "Solicitados",
+  },
+  {
+    collectionRef: "pedidos-andamento",
+    name: "Andamento",
+  },
+  {
+    collectionRef: "pedidos-cancelados",
+    name: "Cancelados",
+  },
+  {
+    collectionRef: "pedidos-concluidos",
+    name: "Concluidos",
+  },
+];
+
 interface Props {
-  colection: string;
+  collectionInput: string;
   nameList: string;
 }
 
-const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
+const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
   const [loading, setLoading] = useState(false);
   const [listPedidos, setListPedidos] = useState<Models.FormModel[]>(
     [] as Models.FormModel[]
@@ -24,7 +43,7 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
 
   const buscarLista = useCallback(async () => {
     setLoading(true);
-    await collection(colection)
+    await collection(collectionInput)
       .orderBy("data_pedido", "desc")
       .limit(30)
       .onSnapshot((snapshot) => {
@@ -34,13 +53,15 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
         setListPedidos(lista);
         setLoading(false);
       });
-  }, [colection]);
+  }, [collectionInput]);
+
+  // const moverPedido = useCallback(async () => {}, []);
 
   useMountEffect(async () => buscarLista());
 
   useEffect(() => {
     buscarLista();
-  }, [buscarLista, colection]);
+  }, [buscarLista, collectionInput]);
 
   return (
     <div className="list-pedidos-container">
@@ -49,7 +70,34 @@ const ListPedidos: React.FC<Props> = ({ colection, nameList }) => {
       {listPedidos.length > 0 ? (
         listPedidos.map((pedido, i) => (
           <Collapse className="collapse-item-pedido">
-            <Panel header={pedido.nome_completo} key={i}>
+            <Panel
+              header={pedido.nome_completo}
+              key={i}
+              extra={
+                <div id="select-uf-crm" style={{ position: "relative" }}>
+                  <Select
+                    getPopupContainer={() =>
+                      document.getElementById("select-uf-crm")!!
+                    }
+                    style={{ width: 130 }}
+                    onChange={(e) => {
+                      console.log(e);
+                    }}
+                    placeholder="Mover pedido"
+                  >
+                    {collectionsPedidos
+                      ?.filter(
+                        ({ collectionRef }) => collectionRef !== collectionInput
+                      )
+                      .map(({ collectionRef, name }) => (
+                        <Select.Option value={collectionRef}>
+                          {name}
+                        </Select.Option>
+                      ))}
+                  </Select>
+                </div>
+              }
+            >
               <Row gutter={16}>
                 <Col span={24}>
                   <Display>
