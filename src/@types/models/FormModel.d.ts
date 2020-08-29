@@ -28,6 +28,8 @@ namespace Models {
     size?: number;
     name: string;
     url: string;
-    descricao?: string;
+    legenda?: string;
+    cor_borda?: string;
+    com_ima?: boolean;
   }
 }

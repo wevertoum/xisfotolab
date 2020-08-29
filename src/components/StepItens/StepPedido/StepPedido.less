@@ -1,4 +1,35 @@
-.popover-detalhes {
+@import "~styles/theme.less";
+
+.itens-detalhe-foto {
+  background-color: @primary-color-shade;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  align-items: center;
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+  }
+  .imagem-pedido {
+    margin: 0 32px 0 32px;
+    img {
+      box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.05);
+      margin-bottom: 8px;
+      border-radius: 8px;
+      width: 80px;
+      height: 80px;
+      @media screen and (max-width: 700px) {
+        margin-top: 16px;
+      }
+    }
+  }
+  .detalhes-pedido {
+    margin: 16px 0 16px 0;
+    .ant-row {
+      margin: 4px 0 4px 0;
+    }
+    @media screen and (max-width: 700px) {
+      margin: 8px 8px 8px 8px;
+    }
+  }
 }

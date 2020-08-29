@@ -93,9 +93,9 @@ const PedidoPage: React.FC = () => {
         onComplete={(values: Models.FileLocal[]) => submitTask(values)}
       >
         <StepPessoais />
-        <StepPedido />
         <StepEntrega />
         <StepFotos />
+        <StepPedido />
         <StepCheckup />
       </Steps>
     </PageContainer>

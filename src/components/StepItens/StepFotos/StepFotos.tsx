@@ -1,6 +1,17 @@
 import React, { useState, useContext, memo } from "react";
 import "./StepFotos.less";
-import { Upload, Modal, message, Tag, Form, Input, Button } from "antd";
+import {
+  Upload,
+  Modal,
+  message,
+  Tag,
+  Form,
+  Input,
+  Button,
+  Row,
+  Col,
+  Switch,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
@@ -82,7 +93,14 @@ const StepFotos: React.FC = () => {
   return (
     <>
       <FadeLoading loading={loading} />
-      <h3>Enviar fotos</h3>
+      <h3>Hora de enviar as fotos</h3>
+      <br />
+      {fileList.length === 0 && (
+        <p>
+          Atenção, fotos que não estejam na proporção 1x1 (quadradas), podem ser
+          cortadas!
+        </p>
+      )}
       <Form.Item name="quantidade_fotos" style={{ display: "none" }}>
         <Input value={fileList.length} />
       </Form.Item>
@@ -97,35 +115,30 @@ const StepFotos: React.FC = () => {
         </div>
       )}
 
-      <div className="clearfix">
-        <Upload
-          accept="image/*"
-          customRequest={handleFireBaseUpload}
-          listType="picture"
-          fileList={fileList as []}
-          onPreview={handlePreview}
-          onChange={({ fileList }) =>
-            handleChange(fileList as Models.FileLocal[])
-          }
-          multiple
-        >
-          <Button
-            icon={<PlusOutlined />}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            clique para enviar fotos
-          </Button>
-        </Upload>
+      <Upload
+        accept="image/*"
+        customRequest={handleFireBaseUpload}
+        listType="picture"
+        fileList={fileList as []}
+        onPreview={handlePreview}
+        onChange={({ fileList }) =>
+          handleChange(fileList as Models.FileLocal[])
+        }
+        multiple
+      >
+        <Button type="primary" icon={<PlusOutlined />}>
+          clique para enviar fotos
+        </Button>
+      </Upload>
 
-        <Modal
-          visible={previewVisible}
-          title={previewTitle}
-          footer={null}
-          onCancel={handleCancel}
-        >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
-        </Modal>
-      </div>
+      <Modal
+        visible={previewVisible}
+        title={previewTitle}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <img alt="example" style={{ width: "100%" }} src={previewImage} />
+      </Modal>
     </>
   );
 };
