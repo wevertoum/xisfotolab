@@ -24,6 +24,7 @@ const StepPedido: React.FC = () => {
               </Col>
               <Col span={14}>
                 <Input
+                  defaultValue={fileList[index].legenda || undefined}
                   placeholder="Digite uma legenda"
                   onChange={({ target }) => {
                     setFileList((old) => {
@@ -43,7 +44,7 @@ const StepPedido: React.FC = () => {
                 <Input
                   type="color"
                   placeholder="cor da borda"
-                  defaultValue="#ffffff"
+                  defaultValue={fileList[index].cor_borda || "#ffffff"}
                   onChange={({ target }) => {
                     setFileList((old) => {
                       const fileList = [...old];
@@ -60,6 +61,7 @@ const StepPedido: React.FC = () => {
               </Col>
               <Col span={14}>
                 <Switch
+                  defaultChecked={fileList[index].com_ima || undefined}
                   checkedChildren={"com imã"}
                   unCheckedChildren={"sem imã"}
                   onChange={(value) => {
