@@ -1,8 +1,6 @@
 import React, { memo, useContext } from "react";
 import "./StepPedido.less";
-import { Form, Input, Popover, Button, Col, Switch, Row, Tag } from "antd";
-import defaultFormRules from "utils/defaultFormRules";
-import { FileFilled } from "@ant-design/icons";
+import { Form, Input, Col, Switch, Row, Tag } from "antd";
 import CadastroContext from "contexts/CadastroContext";
 
 const StepPedido: React.FC = () => {
@@ -11,7 +9,7 @@ const StepPedido: React.FC = () => {
   return (
     <>
       <h3>Detalhes do pedido</h3>
-      <Form.Item label="Observações" name="descricao" rules={defaultFormRules}>
+      <Form.Item label="Observações" name="descricao">
         <Input.TextArea rows={4} placeholder="alguma observação?" />
       </Form.Item>
       {fileList.map((file, index) => (

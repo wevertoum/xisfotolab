@@ -8,9 +8,6 @@ import {
   Form,
   Input,
   Button,
-  Row,
-  Col,
-  Switch,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "utils/firebase";

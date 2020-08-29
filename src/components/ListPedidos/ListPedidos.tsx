@@ -124,7 +124,7 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 <Col span={12}>
                   <Display>
                     Detalhe Entrega
-                    {pedido.detalhes_entrega || "Não informado"}
+                    {pedido.detalhes_entrega || "Sem observações"}
                   </Display>
                 </Col>
               </Row>
