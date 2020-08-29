@@ -10,7 +10,7 @@ const StepPedido: React.FC = () => {
     <>
       <h3>Detalhes do pedido</h3>
       <Form.Item label="Observações" name="descricao">
-        <Input.TextArea rows={4} placeholder="alguma observação?" />
+        <Input.TextArea rows={3} placeholder="alguma observação?" />
       </Form.Item>
       {fileList.map((file, index) => (
         <div className="itens-detalhe-foto">

@@ -71,6 +71,7 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
         >
           <div>
             <Card
+              style={{ marginBottom: 8 }}
               title={[
                 <Tag
                   className="tag-foto-item"
