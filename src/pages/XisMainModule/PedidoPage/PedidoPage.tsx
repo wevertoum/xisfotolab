@@ -16,12 +16,12 @@ import firebase from "firebase";
 
 const PedidoPage: React.FC = () => {
   const [formCadatro] = Form.useForm();
-  const { fileList, clienteEmail } = useContext(CadastroContext);
+  const { fileList, clienteEmail, descricao } = useContext(CadastroContext);
   const [loading, setLoading] = useState(false);
 
   const salvarPedido = useCallback(async (payload: any) => {
     const pedidosRef = collection("pedidos-solicitados");
-    const pedido: any = {
+    const pedido = {
       ...payload,
       data_pedido: firebase.firestore.Timestamp.now(),
     };
@@ -39,6 +39,7 @@ const PedidoPage: React.FC = () => {
           fotografias: fileList,
           email: clienteEmail,
           quantidade_fotos: fileList.length,
+          descricao,
         });
         Modal.success({
           centered: true,

@@ -7,7 +7,7 @@ namespace Models {
     nome_completo: string;
     email: string;
     telefone: string;
-    descricao: string;
+    descricao?: string;
     detalhes_entrega: "retirada" | "entrega";
     endereco?: Endereco;
     quantidade_fotos: number;

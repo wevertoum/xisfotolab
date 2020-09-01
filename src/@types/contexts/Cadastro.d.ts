@@ -11,5 +11,7 @@ namespace Contexts {
     setDetalheEntrega: React.Dispatch<React.SetStateAction<string>>;
     telefoneCliente: string;
     setTelefoneCliente: React.Dispatch<React.SetStateAction<string>>;
+    descricao: string;
+    setDescricao: React.Dispatch<React.SetStateAction<string>>;
   }
 }

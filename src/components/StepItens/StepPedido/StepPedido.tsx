@@ -1,17 +1,22 @@
 import React, { memo, useContext } from "react";
 import "./StepPedido.less";
-import { Form, Input, Col, Switch, Row, Tag } from "antd";
+import { Input, Col, Switch, Row, Tag } from "antd";
 import CadastroContext from "contexts/CadastroContext";
 
 const StepPedido: React.FC = () => {
-  const { fileList, setFileList } = useContext(CadastroContext);
+  const { fileList, setFileList, setDescricao } = useContext(CadastroContext);
 
   return (
     <>
       <h3>Detalhes do pedido</h3>
-      <Form.Item label="Observações" name="descricao">
-        <Input.TextArea rows={3} placeholder="alguma observação?" />
-      </Form.Item>
+
+      <Input.TextArea
+        style={{ marginBottom: 16 }}
+        onChange={(e) => setDescricao(e.target.value)}
+        rows={3}
+        placeholder="alguma observação?"
+      />
+
       {fileList.map((file, index) => (
         <div className="itens-detalhe-foto">
           <div className="imagem-pedido">
