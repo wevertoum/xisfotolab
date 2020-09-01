@@ -95,9 +95,7 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
                   type="ghost"
                   size="middle"
                   onClick={() => download(url, name)}
-                >
-                  Download da imagem
-                </Button>,
+                />,
               ]}
             >
               <Row gutter={16}>

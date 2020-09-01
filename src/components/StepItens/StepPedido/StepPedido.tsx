@@ -4,7 +4,9 @@ import { Input, Col, Switch, Row, Tag } from "antd";
 import CadastroContext from "contexts/CadastroContext";
 
 const StepPedido: React.FC = () => {
-  const { fileList, setFileList, setDescricao } = useContext(CadastroContext);
+  const { fileList, setFileList, setDescricao, descricao } = useContext(
+    CadastroContext
+  );
 
   return (
     <>
@@ -14,6 +16,7 @@ const StepPedido: React.FC = () => {
         style={{ marginBottom: 16 }}
         onChange={(e) => setDescricao(e.target.value)}
         rows={3}
+        defaultValue={descricao || ""}
         placeholder="alguma observação?"
       />
 

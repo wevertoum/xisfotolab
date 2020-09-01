@@ -1,14 +1,6 @@
 import React, { useState, useContext, memo } from "react";
 import "./StepFotos.less";
-import {
-  Upload,
-  Modal,
-  message,
-  Tag,
-  Form,
-  Input,
-  Button,
-} from "antd";
+import { Upload, Modal, message, Tag, Form, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { storage as storageFirebase } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
@@ -64,7 +56,6 @@ const StepFotos: React.FC = () => {
       (TaskState: any) => {},
       (err: any) => {
         message.error("erro no upload");
-        console.error("erro no upload", err);
         setLoading(false);
       },
       async function getUrl() {
@@ -93,10 +84,12 @@ const StepFotos: React.FC = () => {
       <h3>Hora de enviar as fotos</h3>
       <br />
       {fileList.length === 0 && (
-        <p>
-          Atenção, fotos que não estejam na proporção 1x1 (quadradas), podem ser
-          cortadas!
-        </p>
+        <div className="alert-fotos">
+          
+            Atenção, fotos que não estejam na proporção 1x1 (quadradas), podem
+            ser cortadas!
+          
+        </div>
       )}
       <Form.Item name="quantidade_fotos" style={{ display: "none" }}>
         <Input value={fileList.length} />
