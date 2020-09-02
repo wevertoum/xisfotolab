@@ -19,7 +19,7 @@ const AdminPage: React.FC = () => {
   const [currentComponent, setcurrentComponent] = useState<React.ReactNode>(
     <ListPedidos
       collectionInput="pedidos-solicitados"
-      nameList="Pedidos Selecionados"
+      nameList="Pedidos solicitados"
     />
   );
 
