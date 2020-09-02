@@ -3,10 +3,11 @@ import "./ListPedidos.less";
 import { Collapse, Row, Col, Result, Select } from "antd";
 
 import useMountEffect from "hooks/lifecycle/useMountEffect";
-import { collection } from "utils/firebase";
+import { collection, document as doc } from "utils/firebase";
 import FadeLoading from "components/FadeLoading";
 import Display from "components/Display";
 import TagListFotos from "components/TagListFotos";
+import moveFirestoreDoc from "utils/moveFirestoreDoc";
 const { Panel } = Collapse;
 
 const collectionsPedidos = [
@@ -55,6 +56,20 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
       });
   }, [collectionInput]);
 
+  const moverPedido = useCallback(
+    async (destiny: string, value: Models.FormModel) => {
+      try {
+        setLoading(true);
+        const docRef = doc(value.id, collectionInput).path;
+        await moveFirestoreDoc(docRef, destiny, value);
+      } catch {
+      } finally {
+        setLoading(false);
+      }
+    },
+    [collectionInput]
+  );
+
   // const moverPedido = useCallback(async () => {}, []);
 
   useMountEffect(async () => buscarLista());
@@ -69,41 +84,42 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
       <h3>{nameList}</h3>
       {listPedidos.length > 0 ? (
         listPedidos.map((pedido, i) => (
-          <Collapse className="collapse-item-pedido">
-            <Panel
-              header={pedido.nome_completo}
-              key={i}
-              extra={
-                <div id="select-uf-crm" style={{ position: "relative" }}>
-                  <Select
-                    getPopupContainer={() =>
-                      document.getElementById("select-uf-crm")!!
-                    }
-                    style={{ width: 130 }}
-                    onChange={(e) => {
-                      console.log(e);
-                    }}
-                    placeholder="Mover pedido"
-                  >
-                    {collectionsPedidos
-                      ?.filter(
-                        ({ collectionRef }) => collectionRef !== collectionInput
-                      )
-                      .map(({ collectionRef, name }) => (
-                        <Select.Option value={collectionRef}>
-                          {name}
-                        </Select.Option>
-                      ))}
-                  </Select>
-                </div>
-              }
-            >
+          <Collapse key={pedido.id} className="collapse-item-pedido">
+            <Panel header={pedido.nome_completo} key={i}>
               <Row gutter={16}>
-                <Col span={24}>
+                <Col span={12}>
                   <Display>
                     E-mail
                     {pedido.email || "Não informado"}
                   </Display>
+                </Col>
+                <Col span={12}>
+                  <div id="select-uf-crm" style={{ position: "relative" }}>
+                    <Select
+                      getPopupContainer={() =>
+                        document.getElementById("select-uf-crm")!!
+                      }
+                      style={{ width: 130 }}
+                      onChange={(destiny) => {
+                        moverPedido(destiny.toString(), pedido);
+                      }}
+                      placeholder="Mover pedido"
+                    >
+                      {collectionsPedidos
+                        ?.filter(
+                          ({ collectionRef }) =>
+                            collectionRef !== collectionInput
+                        )
+                        .map(({ collectionRef, name }) => (
+                          <Select.Option
+                            key={collectionRef}
+                            value={collectionRef}
+                          >
+                            {name}
+                          </Select.Option>
+                        ))}
+                    </Select>
+                  </div>
                 </Col>
               </Row>
               <Row gutter={16}>
