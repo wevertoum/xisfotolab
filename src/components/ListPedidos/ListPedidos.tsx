@@ -94,10 +94,13 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                   </Display>
                 </Col>
                 <Col span={12}>
-                  <div id="select-uf-crm" style={{ position: "relative" }}>
+                  <div
+                    id={`select-uf-crm-${pedido.id}`}
+                    style={{ position: "absolute" }}
+                  >
                     <Select
                       getPopupContainer={() =>
-                        document.getElementById("select-uf-crm")!!
+                        document.getElementById(`select-uf-crm-${pedido.id}`)!!
                       }
                       style={{ width: 130 }}
                       onChange={(destiny) => {
