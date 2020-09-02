@@ -18,8 +18,8 @@ const AdminPage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [currentComponent, setcurrentComponent] = useState<React.ReactNode>(
     <ListPedidos
-      colection="pedidos-solicitados"
-      nameList="Pedidos Selecionados"
+      collectionInput="pedidos-solicitados"
+      nameList="Pedidos solicitados"
     />
   );
 
@@ -42,7 +42,7 @@ const AdminPage: React.FC = () => {
             onClick={() =>
               setcurrentComponent(
                 <ListPedidos
-                  colection="pedidos-solicitados"
+                  collectionInput="pedidos-solicitados"
                   nameList="Pedidos solicitados"
                 />
               )
@@ -56,7 +56,7 @@ const AdminPage: React.FC = () => {
             onClick={() =>
               setcurrentComponent(
                 <ListPedidos
-                  colection="pedidos-andamento"
+                  collectionInput="pedidos-andamento"
                   nameList="Pedidos em andamento"
                 />
               )
@@ -70,7 +70,7 @@ const AdminPage: React.FC = () => {
             onClick={() =>
               setcurrentComponent(
                 <ListPedidos
-                  colection="pedidos-cancelados"
+                  collectionInput="pedidos-cancelados"
                   nameList="Pedidos cancelados"
                 />
               )
@@ -84,7 +84,7 @@ const AdminPage: React.FC = () => {
             onClick={() =>
               setcurrentComponent(
                 <ListPedidos
-                  colection="pedidos-concluidos"
+                  collectionInput="pedidos-concluidos"
                   nameList="Pedidos concluídos"
                 />
               )

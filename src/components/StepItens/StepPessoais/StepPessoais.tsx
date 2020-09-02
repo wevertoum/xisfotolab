@@ -9,7 +9,7 @@ const StepPessoais: React.FC = () => {
   const { setClienteEmail, setTelefoneCliente } = useContext(CadastroContext);
   return (
     <>
-      <h3>Vamos começar com seus dados :)</h3>
+      <h3>Ok, vamos começar :)</h3>
 
       <Form.Item
         label="Nome Completo"

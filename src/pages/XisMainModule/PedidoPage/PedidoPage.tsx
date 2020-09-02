@@ -16,15 +16,18 @@ import firebase from "firebase";
 
 const PedidoPage: React.FC = () => {
   const [formCadatro] = Form.useForm();
-  const { fileList, clienteEmail } = useContext(CadastroContext);
+  const { fileList, clienteEmail, descricao } = useContext(CadastroContext);
   const [loading, setLoading] = useState(false);
 
   const salvarPedido = useCallback(async (payload: any) => {
-    const pedido: any = {
+    const pedidosRef = collection("pedidos-solicitados");
+    const pedido = {
       ...payload,
       data_pedido: firebase.firestore.Timestamp.now(),
     };
-    await collection("pedidos-solicitados").add({ ...pedido });
+    const ref = await pedidosRef.add({ ...pedido });
+    await pedidosRef.doc(ref.id).update({ id: ref.id });
+    return ref;
   }, []);
 
   const submitTask = async (values: Models.FileLocal[]) => {
@@ -36,6 +39,7 @@ const PedidoPage: React.FC = () => {
           fotografias: fileList,
           email: clienteEmail,
           quantidade_fotos: fileList.length,
+          descricao,
         });
         Modal.success({
           centered: true,
@@ -90,9 +94,9 @@ const PedidoPage: React.FC = () => {
         onComplete={(values: Models.FileLocal[]) => submitTask(values)}
       >
         <StepPessoais />
-        <StepPedido />
         <StepEntrega />
         <StepFotos />
+        <StepPedido />
         <StepCheckup />
       </Steps>
     </PageContainer>

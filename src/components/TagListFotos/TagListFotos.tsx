@@ -2,8 +2,20 @@ import React, { memo, useMemo, useCallback } from "react";
 import "./TagListFotos.less";
 import axios from "axios";
 
-import { Tag, Avatar, Popover, Space } from "antd";
-import { PictureOutlined } from "@ant-design/icons";
+import {
+  Tag,
+  Avatar,
+  Popover,
+  Space,
+  Card,
+  Input,
+  Row,
+  Col,
+  Button,
+} from "antd";
+import { PictureOutlined, DownloadOutlined } from "@ant-design/icons";
+import Display from "components/Display";
+import formatBytes from "utils/formatBytes";
 
 interface Props {
   fotos: Models.FileLocal[];
@@ -37,19 +49,19 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
 
   return (
     <>
-      {tags.map(({ name, url, size, uid }) => (
+      {tags.map(({ name, url, size, uid, legenda, cor_borda, com_ima }) => (
         <Popover
           key={uid}
           content={
             <Space style={{ maxWidth: 300 }}>
-              <Avatar icon={<PictureOutlined />} src={url} />
+              <Avatar icon={<PictureOutlined />} src={url} size={100} />
               <div style={{ marginLeft: 8 }}>
                 <h3 style={{ color: "var(--primary-color)", marginBottom: 0 }}>
                   {name}
                 </h3>
                 <span>
                   <Tag color="blue">
-                    size: <b>{size}</b>
+                    tamanho: <b>{formatBytes(size!, 2)}</b>
                   </Tag>
                 </span>
               </div>
@@ -57,23 +69,57 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
           }
           trigger="hover"
         >
-          <Tag
-            color="blue"
-            onClick={() => download(url, name)}
-            icon={
-              url ? (
-                <Avatar
-                  src={url}
-                  size={16}
-                  style={{ marginBottom: 2, marginRight: 8 }}
-                />
-              ) : (
-                <PictureOutlined />
-              )
-            }
-          >
-            {getNomeLabel(name)}
-          </Tag>
+          <div>
+            <Card
+              style={{ marginBottom: 8 }}
+              title={[
+                <Tag
+                  className="tag-foto-item"
+                  color="blue"
+                  icon={
+                    url ? (
+                      <Avatar
+                        src={url}
+                        size={16}
+                        style={{ marginBottom: 2, marginRight: 8 }}
+                      />
+                    ) : (
+                      <PictureOutlined />
+                    )
+                  }
+                >
+                  {getNomeLabel(name)}
+                </Tag>,
+                <Button
+                  icon={<DownloadOutlined />}
+                  type="ghost"
+                  size="middle"
+                  onClick={() => download(url, name)}
+                />,
+              ]}
+            >
+              <Row gutter={16}>
+                <Col span={6}>
+                  <div>
+                    <p>Cor da borda ({cor_borda || "não selecionada"})</p>
+                    <Input
+                      style={{ maxWidth: 150 }}
+                      type="color"
+                      disabled
+                      value={cor_borda || "#ffffff"}
+                    />
+                  </div>
+                </Col>
+                <Col span={10}>
+                  <Display>
+                    Legenda:
+                    {legenda || "Sem legenda"}
+                  </Display>
+                </Col>
+                <Col span={8}>{com_ima && <h3>Com ímã</h3>}</Col>
+              </Row>
+            </Card>
+          </div>
         </Popover>
       ))}
     </>

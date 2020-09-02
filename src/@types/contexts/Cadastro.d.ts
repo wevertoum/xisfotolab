@@ -3,13 +3,15 @@
 
 namespace Contexts {
   interface Cadastro {
-    fileList: Models.FileList[];
-    setFileList: Dispatch<SetStateAction<Models.FileList[]>>;
+    fileList: Models.FileLocal[];
+    setFileList: React.Dispatch<React.SetStateAction<Models.FileLocal[]>>;
     clienteEmail: string;
-    setClienteEmail: Dispatch<SetStateAction<string>>;
+    setClienteEmail: React.Dispatch<React.SetStateAction<string>>;
     detalheEntrega: string;
-    setDetalheEntrega: Dispatch<SetStateAction<string>>;
+    setDetalheEntrega: React.Dispatch<React.SetStateAction<string>>;
     telefoneCliente: string;
-    setTelefoneCliente: Dispatch<SetStateAction<string>>;
+    setTelefoneCliente: React.Dispatch<React.SetStateAction<string>>;
+    descricao: string;
+    setDescricao: React.Dispatch<React.SetStateAction<string>>;
   }
 }
