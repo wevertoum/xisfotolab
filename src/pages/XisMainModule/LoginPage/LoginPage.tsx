@@ -110,8 +110,8 @@ const LoginPage: React.FC = () => {
               <Button
                 className="login-action"
                 type="primary"
-                onClick={form.submit}
                 size="large"
+                htmlType="submit"
                 disabled={loading}
                 icon={<LoginOutlined />}
               >
