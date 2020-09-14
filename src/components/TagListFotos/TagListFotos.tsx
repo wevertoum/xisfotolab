@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { PictureOutlined, DownloadOutlined } from "@ant-design/icons";
 import Display from "components/Display";
-import formatBytes from "utils/formatBytes";
+import formatter from "utils/formatter";
 
 interface Props {
   fotos: Models.FileLocal[];
@@ -61,7 +61,8 @@ const TagListFotos: React.FC<Props> = ({ fotos = [] }) => {
                 </h3>
                 <span>
                   <Tag color="blue">
-                    tamanho: <b>{formatBytes(size!, 2)}</b>
+                    tamanho:{" "}
+                    <b>{formatter([(size || 0).toString(), "bytes"])}</b>
                   </Tag>
                 </span>
               </div>
