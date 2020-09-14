@@ -1,6 +1,6 @@
 import React, { useContext, memo, Suspense } from "react";
-import { Route, RouteProps } from "react-router-dom";
-import { Result, Space } from "antd";
+import { Route, RouteProps, useHistory } from "react-router-dom";
+import { Button, Result, Space } from "antd";
 import UserContext from "contexts/UserContext";
 import FadeLoading from "components/FadeLoading";
 
@@ -17,11 +17,11 @@ const PrivateRoute: React.FC<Props & RouteProps> = ({
 }) => {
   const { user } = useContext(UserContext);
 
-  // const logout = useCallback(() => {
-  //   localStorage.clear();
-  //   history.replace("/login");
-  //   window.location.reload();
-  // }, [history]);
+  const history = useHistory();
+
+  const navigate = () => {
+    history.replace("/login");
+  };
 
   return (
     <>
@@ -47,12 +47,18 @@ const PrivateRoute: React.FC<Props & RouteProps> = ({
             height: "100%",
             justifyContent: "center",
             display: "flex",
+            position: "absolute",
           }}
         >
           <Result
             status="403"
             title="403"
             subTitle="Você não tem autorização pra acessar essa página :/"
+            extra={
+              <Button onClick={navigate} type="primary">
+                Voltar
+              </Button>
+            }
           />
         </Space>
       )}
