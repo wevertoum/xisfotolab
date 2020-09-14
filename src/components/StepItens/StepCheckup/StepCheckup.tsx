@@ -1,9 +1,11 @@
-import React, { memo, useContext } from "react";
+import React, { memo, useContext, useCallback, useState, useMemo } from "react";
 import "./StepCheckup.less";
 import { Tag, Card, Row, Col } from "antd";
 import CadastroContext from "contexts/CadastroContext";
 import Display from "components/Display";
 import CheckList from "icons/CheckList";
+import { collection } from "utils/firebase";
+import useMountEffect from "hooks/lifecycle/useMountEffect";
 
 const StepCheckup: React.FC = () => {
   const {
@@ -12,6 +14,21 @@ const StepCheckup: React.FC = () => {
     detalheEntrega,
     telefoneCliente,
   } = useContext(CadastroContext);
+  const [loading, setLoading] = useState(true);
+  const [precos, setPrecos] = useState({} as Models.Precos);
+
+  const buscarPrecos = useCallback(async () => {
+    setLoading(true);
+    await collection("configs")
+      .doc("precos")
+      .onSnapshot((snapshot) => {
+        const precos = snapshot.data() as Models.Precos;
+        setPrecos(precos);
+        setLoading(false);
+      });
+  }, []);
+
+  useMountEffect(buscarPrecos);
 
   return (
     <>
@@ -30,10 +47,20 @@ const StepCheckup: React.FC = () => {
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={24}>
+          <Col span={12}>
             <Display>
               Telefone
               {<Tag color="orange">{telefoneCliente || "seu telefone"}</Tag>}
+            </Display>
+          </Col>
+          <Col span={12}>
+            <Display>
+              Preço total
+              {
+                <Tag color="orange">
+                  {precos.frete.valor || "preço do pedido"}
+                </Tag>
+              }
             </Display>
           </Col>
         </Row>
