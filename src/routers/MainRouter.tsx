@@ -6,10 +6,10 @@ import {
   Redirect,
 } from "react-router-dom";
 import { CadastroProvider } from "contexts/CadastroContext";
-import { UserProvider } from "contexts/UserContext";
 import PedidoPage from "pages/XisMainModule/PedidoPage";
 import LoginPage from "pages/XisMainModule/LoginPage";
 import PrivateRoute from "HOCs/PrivateRoute";
+import NotFoundPage from "pages/NotFoundPage";
 
 const AdminPage = React.lazy(() => import("../pages/XisMainModule/AdminPage"));
 
@@ -25,12 +25,14 @@ const MainRouter: React.FC = () => {
           </CadastroProvider>
         </Route>
 
-        <UserProvider>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <PrivateRoute lazy path="/admin" component={AdminPage} />
-        </UserProvider>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <PrivateRoute lazy path="/admin" component={AdminPage} />
+
+        <Route path="/*">
+          <NotFoundPage />
+        </Route>
       </Switch>
     </Router>
   );

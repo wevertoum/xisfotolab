@@ -1,10 +1,13 @@
+import { UserProvider } from "contexts/UserContext";
 import React from "react";
 import MainRouter from "./routers/MainRouter";
 
 function App() {
   return (
     <div>
-      <MainRouter />
+      <UserProvider>
+        <MainRouter />
+      </UserProvider>
     </div>
   );
 }
