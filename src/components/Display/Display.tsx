@@ -10,12 +10,14 @@ type Props = HTMLProps<HTMLDivElement> & {
   ];
   skipBold?: boolean;
   greyText?: boolean;
+  color?: string;
 };
 
 const Display: React.FC<Props> = ({
   children,
   skipBold = false,
   greyText = false,
+  color,
   ...props
 }) => {
   const [label, value] = useMemo(() => children, [children]);
@@ -36,6 +38,7 @@ const Display: React.FC<Props> = ({
               color: "var(--primary-color)",
               margin: "2px",
             }}
+            color={color}
           >
             {name}
           </Tag>
