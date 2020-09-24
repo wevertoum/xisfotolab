@@ -8,14 +8,21 @@ import {
   StepForwardOutlined,
   DeleteOutlined,
   CheckCircleOutlined,
+  ShoppingCartOutlined,
+  SettingOutlined,
+  TagsOutlined,
 } from "@ant-design/icons";
 import ListPedidos from "components/ListPedidos";
 import PerfilAdmin from "components/PerfilAdmin";
+import SubMenu from "antd/lib/menu/SubMenu";
+import PricesAdmin from "components/PricesAdmin";
 
 const { Sider, Content } = Layout;
 
 const AdminPage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(true);
+  // const [editing, setEditing] = useState(false);
+
   const [currentComponent, setcurrentComponent] = useState<React.ReactNode>(
     <ListPedidos
       collectionInput="pedidos-solicitados"
@@ -29,8 +36,8 @@ const AdminPage: React.FC = () => {
 
   return (
     <Layout className="container-menu-sider">
-      <Sider onCollapse={toggle} collapsible collapsed={collapsed}>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["2"]}>
+      <Sider theme="light" onCollapse={toggle} collapsible collapsed={collapsed}>
+        <Menu theme="light" mode="inline" defaultSelectedKeys={["2"]}>
           <Menu.Item
             onClick={() => setcurrentComponent(<PerfilAdmin />)}
             key="1"
@@ -38,62 +45,89 @@ const AdminPage: React.FC = () => {
           >
             Perfil de usuário
           </Menu.Item>
-          <Menu.Item
-            onClick={() =>
-              setcurrentComponent(
-                <ListPedidos
-                  collectionInput="pedidos-solicitados"
-                  nameList="Pedidos solicitados"
-                />
-              )
+          <SubMenu
+            key="pedidos_grupo"
+            title={
+              <span>
+                <ShoppingCartOutlined />
+                <span>Pedidos</span>
+              </span>
             }
-            key="2"
-            icon={<ClockCircleOutlined />}
           >
-            Solicitados
-          </Menu.Item>
-          <Menu.Item
-            onClick={() =>
-              setcurrentComponent(
-                <ListPedidos
-                  collectionInput="pedidos-andamento"
-                  nameList="Pedidos em andamento"
-                />
-              )
+            <Menu.Item
+              onClick={() =>
+                setcurrentComponent(
+                  <ListPedidos
+                    collectionInput="pedidos-solicitados"
+                    nameList="Pedidos solicitados"
+                  />
+                )
+              }
+              key="2"
+              icon={<ClockCircleOutlined />}
+            >
+              Solicitados
+            </Menu.Item>
+            <Menu.Item
+              onClick={() =>
+                setcurrentComponent(
+                  <ListPedidos
+                    collectionInput="pedidos-andamento"
+                    nameList="Pedidos em andamento"
+                  />
+                )
+              }
+              key="3"
+              icon={<StepForwardOutlined />}
+            >
+              Em andamento
+            </Menu.Item>
+            <Menu.Item
+              onClick={() =>
+                setcurrentComponent(
+                  <ListPedidos
+                    collectionInput="pedidos-cancelados"
+                    nameList="Pedidos cancelados"
+                  />
+                )
+              }
+              key="4"
+              icon={<DeleteOutlined />}
+            >
+              Cancelados
+            </Menu.Item>
+            <Menu.Item
+              onClick={() =>
+                setcurrentComponent(
+                  <ListPedidos
+                    collectionInput="pedidos-concluidos"
+                    nameList="Pedidos concluídos"
+                  />
+                )
+              }
+              key="5"
+              icon={<CheckCircleOutlined />}
+            >
+              Concluídos
+            </Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="configs_grupo"
+            title={
+              <span>
+                <SettingOutlined />
+                <span>Configurações</span>
+              </span>
             }
-            key="3"
-            icon={<StepForwardOutlined />}
           >
-            Em andamento
-          </Menu.Item>
-          <Menu.Item
-            onClick={() =>
-              setcurrentComponent(
-                <ListPedidos
-                  collectionInput="pedidos-cancelados"
-                  nameList="Pedidos cancelados"
-                />
-              )
-            }
-            key="4"
-            icon={<DeleteOutlined />}
-          >
-            Cancelados
-          </Menu.Item>
-          <Menu.Item
-            onClick={() =>
-              setcurrentComponent(
-                <ListPedidos
-                  collectionInput="pedidos-concluidos"
-                  nameList="Pedidos concluídos"
-                />
-              )
-            }
-            key="5"
-            icon={<CheckCircleOutlined />}
-          >
-            Concluídos
-          </Menu.Item>
+            <Menu.Item
+              onClick={() => setcurrentComponent(<PricesAdmin />)}
+              key="6"
+              icon={<TagsOutlined />}
+            >
+              Preços
+            </Menu.Item>
+          </SubMenu>
         </Menu>
       </Sider>
       <Layout className="site-layout">

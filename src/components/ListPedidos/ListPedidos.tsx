@@ -70,8 +70,6 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
     [collectionInput]
   );
 
-  // const moverPedido = useCallback(async () => {}, []);
-
   useMountEffect(async () => buscarLista());
 
   useEffect(() => {
@@ -82,10 +80,11 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
     <div className="list-pedidos-container">
       <FadeLoading loading={loading} />
       <h3>{nameList}</h3>
+
       {listPedidos.length > 0 ? (
-        listPedidos.map((pedido, i) => (
-          <Collapse key={pedido.id} className="collapse-item-pedido">
-            <Panel header={pedido.nome_completo} key={i}>
+        <Collapse accordion className="collapse-item-pedido">
+          {listPedidos.map((pedido) => (
+            <Panel header={pedido.nome_completo} key={pedido.id!}>
               <Row gutter={16}>
                 <Col span={12}>
                   <Display>
@@ -183,8 +182,8 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 </Col>
               </Row>
             </Panel>
-          </Collapse>
-        ))
+          ))}
+        </Collapse>
       ) : (
         <Result
           status="warning"
