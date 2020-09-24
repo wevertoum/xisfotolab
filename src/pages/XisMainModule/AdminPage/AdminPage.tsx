@@ -21,7 +21,7 @@ const { Sider, Content } = Layout;
 
 const AdminPage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(true);
-  const [editing, setEditing] = useState(false);
+  // const [editing, setEditing] = useState(false);
 
   const [currentComponent, setcurrentComponent] = useState<React.ReactNode>(
     <ListPedidos
