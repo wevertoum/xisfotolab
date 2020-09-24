@@ -1,4 +1,4 @@
-import React, { memo, useState, useMemo, useContext } from "react";
+import React, { memo, useState, useMemo, useContext, useEffect } from "react";
 import "./StepEntrega.less";
 import { Form, Input, Select, Row, Col } from "antd";
 import { MaskedInput } from "antd-mask-input";
@@ -9,8 +9,13 @@ import CadastroContext from "contexts/CadastroContext";
 
 const StepEntrega: React.FC = () => {
   const [detalhe, setDetalhe] = useState("entrega");
+  const { setDetalheEntrega, setEntrega } = useContext(CadastroContext);
+
   const entrega = useMemo(() => detalhe === "entrega", [detalhe]);
-  const { setDetalheEntrega } = useContext(CadastroContext);
+  useEffect(() => {
+    setEntrega(entrega);
+  }, [entrega, setEntrega]);
+  
   return (
     <>
       <h3>Agora vamos aos detalhes da entrega</h3>

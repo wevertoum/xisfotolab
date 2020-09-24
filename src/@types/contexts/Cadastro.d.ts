@@ -13,5 +13,9 @@ namespace Contexts {
     setTelefoneCliente: React.Dispatch<React.SetStateAction<string>>;
     descricao: string;
     setDescricao: React.Dispatch<React.SetStateAction<string>>;
+    valorTotal: number;
+    setValorTotal: React.Dispatch<React.SetStateAction<number>>;
+    entrega: boolean;
+    setEntrega: React.Dispatch<React.SetStateAction<boolean>>;
   }
 }

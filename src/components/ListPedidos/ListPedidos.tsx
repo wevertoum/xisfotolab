@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState, useEffect } from "react";
 import "./ListPedidos.less";
-import { Collapse, Row, Col, Result, Select } from "antd";
+import { Collapse, Row, Col, Result, Select, Divider } from "antd";
 
 import useMountEffect from "hooks/lifecycle/useMountEffect";
 import { collection, document as doc } from "utils/firebase";
@@ -8,6 +8,7 @@ import FadeLoading from "components/FadeLoading";
 import Display from "components/Display";
 import TagListFotos from "components/TagListFotos";
 import moveFirestoreDoc from "utils/moveFirestoreDoc";
+import formatter from "utils/formatter";
 const { Panel } = Collapse;
 
 const collectionsPedidos = [
@@ -89,7 +90,7 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 <Col span={12}>
                   <Display>
                     E-mail
-                    {pedido.email || "Não informado"}
+                    {[pedido.email || "Não informado"]}
                   </Display>
                 </Col>
                 <Col span={12}>
@@ -128,7 +129,7 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 <Col span={24}>
                   <Display>
                     Telefone
-                    {pedido.telefone || "Não informado"}
+                    {[pedido.telefone || "Não informado"]}
                   </Display>
                 </Col>
               </Row>
@@ -136,7 +137,7 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 <Col span={12}>
                   <Display>
                     Quantidade de fotos
-                    {pedido.quantidade_fotos || "Não informado"}
+                    {[pedido.quantidade_fotos || "Não informado"]}
                   </Display>
                 </Col>
                 <Col span={12}>
@@ -166,13 +167,25 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 </Row>
               )}
               <Row gutter={16}>
-                <Col span={24}>
+                <Col span={12}>
+                  <Display>
+                    Valor total pedido
+                    {[
+                      formatter([
+                        (pedido.valor_pedido / 100).toFixed(2),
+                        "real",
+                      ]),
+                    ]}
+                  </Display>
+                </Col>
+                <Col span={12}>
                   <Display>
                     Detalhes pedido
                     {pedido.descricao}
                   </Display>
                 </Col>
               </Row>
+              <Divider></Divider>
               <Row gutter={16}>
                 <Col span={24}>
                   <Display>

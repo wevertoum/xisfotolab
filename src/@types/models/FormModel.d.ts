@@ -12,6 +12,7 @@ namespace Models {
     endereco?: Endereco;
     quantidade_fotos: number;
     fotografias: FileLocal[];
+    valor_pedido: number;
   }
 
   interface Endereco {

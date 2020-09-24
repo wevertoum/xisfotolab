@@ -11,6 +11,8 @@ export const CadastroProvider: React.FC<Props> = ({ children }) => {
   const [detalheEntrega, setDetalheEntrega] = useState("");
   const [telefoneCliente, setTelefoneCliente] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [valorTotal, setValorTotal] = useState(0);
+  const [entrega, setEntrega] = useState(true);
 
   return (
     <CadastroContext.Provider
@@ -25,6 +27,10 @@ export const CadastroProvider: React.FC<Props> = ({ children }) => {
         setTelefoneCliente,
         descricao,
         setDescricao,
+        valorTotal,
+        setValorTotal,
+        entrega,
+        setEntrega,
       }}
     >
       {children}

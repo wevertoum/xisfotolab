@@ -1,6 +1,13 @@
-import React, { memo, useContext, useCallback, useState, useMemo } from "react";
+import React, {
+  memo,
+  useContext,
+  useCallback,
+  useState,
+  useMemo,
+  useEffect,
+} from "react";
 import "./StepCheckup.less";
-import { Card, Row, Col, Divider } from "antd";
+import { Card, Row, Col, Divider, Tag } from "antd";
 import CadastroContext from "contexts/CadastroContext";
 import Display from "components/Display";
 import CheckList from "icons/CheckList";
@@ -15,6 +22,8 @@ const StepCheckup: React.FC = () => {
     clienteEmail,
     detalheEntrega,
     telefoneCliente,
+    setValorTotal,
+    entrega,
   } = useContext(CadastroContext);
   const [loading, setLoading] = useState(true);
   const [precos, setPrecos] = useState({} as Models.Precos);
@@ -27,6 +36,11 @@ const StepCheckup: React.FC = () => {
   const qtdSemIma = useMemo(() => fileList.length - qtdComIma, [
     fileList,
     qtdComIma,
+  ]);
+
+  const precoFrete = useMemo(() => (entrega ? precos?.frete?.valor : 0), [
+    entrega,
+    precos,
   ]);
 
   const buscarPrecos = useCallback(async () => {
@@ -74,6 +88,10 @@ const StepCheckup: React.FC = () => {
     }, 0);
   }, [fileList, precosUnitarios]);
 
+  useEffect(() => {
+    setValorTotal((precoFrete || 0) + precoTotal);
+  }, [precoFrete, precoTotal, precos, setValorTotal]);
+
   useMountEffect(buscarPrecos);
 
   return (
@@ -114,18 +132,39 @@ const StepCheckup: React.FC = () => {
           <Col span={12}>
             <Display>
               Quantidade
-              {[
-                `com imã: ${qtdComIma}`,
-                `sem imã: ${qtdSemIma}`,
-                `total: ${qtdComIma + qtdSemIma}`,
-              ]}
+              {[`com imã: ${qtdComIma}`, `sem imã: ${qtdSemIma}`]}
             </Display>
           </Col>
 
           <Col span={12}>
             <Display>
-              Preço total
-              {[formatter([(precoTotal / 100).toFixed(2), "real"])]}
+              Preços
+              {[
+                `fotos: ${formatter([(precoTotal / 100).toFixed(2), "real"])}`,
+                `frete: ${formatter([(precoFrete / 100).toFixed(2), "real"])}`,
+              ]}
+            </Display>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Display>
+              Total qtd:
+              {<Tag color="blue">{qtdComIma + qtdSemIma}</Tag>}
+            </Display>
+          </Col>
+
+          <Col span={12}>
+            <Display>
+              Preço final
+              {
+                <Tag color="blue">
+                  {formatter([
+                    ((precoFrete + precoTotal) / 100).toFixed(2),
+                    "real",
+                  ])}
+                </Tag>
+              }
             </Display>
           </Col>
         </Row>

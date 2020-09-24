@@ -16,7 +16,9 @@ import firebase from "firebase";
 
 const PedidoPage: React.FC = () => {
   const [formCadatro] = Form.useForm();
-  const { fileList, clienteEmail, descricao } = useContext(CadastroContext);
+  const { fileList, clienteEmail, descricao, valorTotal } = useContext(
+    CadastroContext
+  );
   const [loading, setLoading] = useState(false);
 
   const salvarPedido = useCallback(async (payload: any) => {
@@ -39,6 +41,7 @@ const PedidoPage: React.FC = () => {
           fotografias: fileList,
           email: clienteEmail,
           quantidade_fotos: fileList.length,
+          valor_pedido: valorTotal,
           descricao,
         });
         Modal.success({
