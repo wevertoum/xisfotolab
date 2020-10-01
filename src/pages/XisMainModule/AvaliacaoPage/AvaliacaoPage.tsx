@@ -90,7 +90,7 @@ const AvaliacaoPage: React.FC = () => {
           rootName="avaliacao_xis"
         />
         <AvaliaForm
-          title="O que você achou de fazer o pedido pelo nosso site?"
+          title="Como foi sua experiência ao fazer o pedido pelo site?"
           rootName="avaliacao_sistema"
         />
       </Steps>
