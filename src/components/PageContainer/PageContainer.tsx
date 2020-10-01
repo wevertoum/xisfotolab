@@ -13,8 +13,16 @@ const PageContainer: React.FC<any> = ({ children, title }) => {
         <div className="page-wrapper">
           {children}
           <small>
-            Feito com 🧡 por{" "}
-            <a href="https://weverton.me" target="_blank">
+            Feito com{" "}
+            <span role="img" aria-label="sheep">
+              🧡
+            </span>{" "}
+            por{" "}
+            <a
+              href="https://weverton.me"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Weverton
             </a>
           </small>
