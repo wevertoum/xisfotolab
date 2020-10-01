@@ -9,6 +9,7 @@ import Display from "components/Display";
 import TagListFotos from "components/TagListFotos";
 import moveFirestoreDoc from "utils/moveFirestoreDoc";
 import formatter from "utils/formatter";
+import moment from "moment";
 const { Panel } = Collapse;
 
 const collectionsPedidos = [
@@ -126,10 +127,20 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 </Col>
               </Row>
               <Row gutter={16}>
-                <Col span={24}>
+                <Col span={12}>
                   <Display>
                     Telefone
                     {[pedido.telefone || "Não informado"]}
+                  </Display>
+                </Col>
+                <Col span={12}>
+                  <Display>
+                    Data do pedido
+                    {[
+                      moment(pedido.data_pedido!.seconds * 1000).format(
+                        "DD/MM/Y hh:mm a"
+                      ),
+                    ]}
                   </Display>
                 </Col>
               </Row>
@@ -143,7 +154,7 @@ const ListPedidos: React.FC<Props> = ({ collectionInput, nameList }) => {
                 <Col span={12}>
                   <Display>
                     Detalhe Entrega
-                    {pedido.detalhes_entrega || "Sem observações"}
+                    {[pedido.detalhes_entrega || "Sem observações"]}
                   </Display>
                 </Col>
               </Row>

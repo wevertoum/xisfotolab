@@ -3,7 +3,7 @@ import "./PedidoPage.less";
 
 import PageContainer from "components/PageContainer";
 import Steps from "components/Steps";
-import { Form, Modal, Result } from "antd";
+import { Button, Col, Form, Modal, Result, Row, Space } from "antd";
 import StepPessoais from "components/StepItens/StepPessoais";
 import StepPedido from "components/StepItens/StepPedido";
 import StepEntrega from "components/StepItens/StepEntrega";
@@ -12,14 +12,17 @@ import CadastroContext from "contexts/CadastroContext";
 import StepCheckup from "components/StepItens/StepCheckup";
 import FadeLoading from "components/FadeLoading";
 import { collection } from "utils/firebase";
+import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 
 const PedidoPage: React.FC = () => {
+  const history = useHistory();
   const [formCadatro] = Form.useForm();
   const { fileList, clienteEmail, descricao, valorTotal } = useContext(
     CadastroContext
   );
   const [loading, setLoading] = useState(false);
+  const navigate = useCallback(() => history.replace(`/avaliacao`), [history]);
 
   const salvarPedido = useCallback(async (payload: any) => {
     const pedidosRef = collection("pedidos-solicitados");
@@ -44,16 +47,48 @@ const PedidoPage: React.FC = () => {
           valor_pedido: valorTotal,
           descricao,
         });
-        Modal.success({
+        const modal = Modal.success({
+          title: "Sucesso! Recebemos seu pedido",
           centered: true,
-          onOk: () => window.location.reload(),
+          okButtonProps: {
+            style: {
+              display: "none",
+            },
+          },
+          cancelButtonProps: {
+            style: {
+              display: "none",
+            },
+          },
+          okText: "Concluir",
           content: (
             <>
-              <Result
-                status="success"
-                title="Tudo certo!"
-                subTitle="Já recebemos seu pedido, logo entraremos em contato."
-              />
+              <Space direction="vertical">
+                <small>Que tals nos avaliar?</small>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        window.location.reload();
+                      }}
+                    >
+                      Não, já terminei
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        navigate();
+                        modal.destroy();
+                      }}
+                    >
+                      Sim! Gostaria
+                    </Button>
+                  </Col>
+                </Row>
+              </Space>
             </>
           ),
         });

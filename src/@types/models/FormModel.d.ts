@@ -8,6 +8,7 @@ namespace Models {
     email: string;
     telefone: string;
     descricao?: string;
+    data_pedido?: TimesTamp;
     detalhes_entrega: "retirada" | "entrega";
     endereco?: Endereco;
     quantidade_fotos: number;
@@ -32,5 +33,10 @@ namespace Models {
     legenda?: string;
     cor_borda?: string;
     com_ima?: boolean;
+  }
+
+  interface TimesTamp {
+    seconds: number;
+    nanoseconds: number;
   }
 }

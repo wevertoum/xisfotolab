@@ -13,12 +13,18 @@ import {
 interface Props {
   children: ReactNode[];
   form: FormInstance;
+  initialValues?: Dict<any>;
   onComplete: (values: any) => void;
 }
 
-const Steps: React.FC<Props> = ({ children, form, onComplete }) => {
+const Steps: React.FC<Props> = ({
+  children,
+  form,
+  onComplete,
+  initialValues = {},
+}) => {
   const [index, setIndex] = useState(1);
-  const [valuesForm, setValuesForm] = useState<any>();
+  const [valuesForm, setValuesForm] = useState<any>(initialValues);
   const currentStep = useMemo(() => children[index - 1], [children, index]);
   const percent = useMemo(() => Math.floor((index / children.length) * 100), [
     children.length,

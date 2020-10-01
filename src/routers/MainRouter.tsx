@@ -10,6 +10,7 @@ import PedidoPage from "pages/XisMainModule/PedidoPage";
 import LoginPage from "pages/XisMainModule/LoginPage";
 import PrivateRoute from "HOCs/PrivateRoute";
 import NotFoundPage from "pages/NotFoundPage";
+import AvaliacaoPage from "pages/XisMainModule/AvaliacaoPage";
 
 const AdminPage = React.lazy(() => import("../pages/XisMainModule/AdminPage"));
 
@@ -27,6 +28,10 @@ const MainRouter: React.FC = () => {
 
         <Route path="/login">
           <LoginPage />
+        </Route>
+
+        <Route path="/avaliacao">
+          <AvaliacaoPage />
         </Route>
         <PrivateRoute lazy path="/admin" component={AdminPage} />
 
