@@ -12,9 +12,16 @@ const customIcons = [
   <SmileOutlined className="custom-rate-icon" />,
 ];
 
-const CustomRate: React.FC<RateProps> = (props) => {
+type Props = RateProps & {
+  value?: number;
+  disabled?: boolean;
+};
+
+const CustomRate: React.FC<Props> = ({ value, disabled, ...props }) => {
   return (
     <Rate
+      value={value}
+      disabled={disabled}
       {...props}
       character={({ index }: any) => {
         return customIcons[index];
