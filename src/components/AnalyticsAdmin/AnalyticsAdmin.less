@@ -1,0 +1,17 @@
+@import "~styles/theme.less";
+
+.display-card-analytics {
+  width: 100%;
+  min-height: calc(100% - 57px);
+
+  & > .ant-card-body {
+    min-height: calc(100% - 57px);
+
+    .content-chart {
+      background: transparent;
+      .graph-content {
+        width: 50%;
+      }
+    }
+  }
+}

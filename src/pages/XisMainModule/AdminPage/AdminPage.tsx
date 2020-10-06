@@ -11,16 +11,18 @@ import {
   ShoppingCartOutlined,
   SettingOutlined,
   TagsOutlined,
+  PieChartOutlined,
 } from "@ant-design/icons";
 import ListPedidos from "components/ListPedidos";
 import PerfilAdmin from "components/PerfilAdmin";
 import SubMenu from "antd/lib/menu/SubMenu";
 import PricesAdmin from "components/PricesAdmin";
+import AnalyticsAdmin from "components/AnalyticsAdmin";
 
 const { Sider, Content } = Layout;
 
 const AdminPage: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   // const [editing, setEditing] = useState(false);
 
   const [currentComponent, setcurrentComponent] = useState<React.ReactNode>(
@@ -36,7 +38,12 @@ const AdminPage: React.FC = () => {
 
   return (
     <Layout className="container-menu-sider">
-      <Sider theme="light" onCollapse={toggle} collapsible collapsed={collapsed}>
+      <Sider
+        theme="light"
+        onCollapse={toggle}
+        collapsible
+        collapsed={collapsed}
+      >
         <Menu theme="light" mode="inline" defaultSelectedKeys={["2"]}>
           <Menu.Item
             onClick={() => setcurrentComponent(<PerfilAdmin />)}
@@ -128,6 +135,13 @@ const AdminPage: React.FC = () => {
               Preços
             </Menu.Item>
           </SubMenu>
+          <Menu.Item
+            onClick={() => setcurrentComponent(<AnalyticsAdmin />)}
+            key="7"
+            icon={<PieChartOutlined />}
+          >
+            Analytics
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
