@@ -20,14 +20,6 @@ import Display from "components/Display";
 import CustomRate from "components/AvaliacaoItens/CustomRate";
 const { Panel } = Collapse;
 
-interface Notas {
-  a?: number;
-  b?: number;
-  c?: number;
-  d?: number;
-  e?: number;
-}
-
 const AnalyticsAdmin: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [avaliacoes, setAvaliacoes] = useState<Models.Avaliacao[]>(
@@ -36,23 +28,25 @@ const AnalyticsAdmin: React.FC = () => {
   const [dateSelected, setDateSelected] = useState<[Moment, Moment]>();
 
   const searchData = useCallback(async (range: Moment[]) => {
-    setLoading(true);
     setDateSelected(range as [Moment, Moment]);
-    const initDate = range[0].toDate();
-    const finalDate = range[1].toDate();
+    if (range) {
+      setLoading(true);
+      const initDate = range[0].toDate();
+      const finalDate = range[1].toDate();
 
-    await collection("avaliacoes")
-      .where("data_avaliacao", ">=", initDate)
-      .where("data_avaliacao", "<=", finalDate)
-      .orderBy("data_avaliacao", "desc")
-      .onSnapshot((snapshot) => {
-        const avaliacoesApi: Models.Avaliacao[] = snapshot.docs.map((doc) =>
-          doc.data()
-        ) as Models.Avaliacao[];
-        console.log(avaliacoesApi);
-        setAvaliacoes(avaliacoesApi);
-        setLoading(false);
-      });
+      await collection("avaliacoes")
+        .where("data_avaliacao", ">=", initDate)
+        .where("data_avaliacao", "<=", finalDate)
+        .orderBy("data_avaliacao", "desc")
+        .onSnapshot((snapshot) => {
+          const avaliacoesApi: Models.Avaliacao[] = snapshot.docs.map((doc) =>
+            doc.data()
+          ) as Models.Avaliacao[];
+          console.log(avaliacoesApi);
+          setAvaliacoes(avaliacoesApi);
+          setLoading(false);
+        });
+    }
   }, []);
 
   const notasXis = useMemo(() => {
