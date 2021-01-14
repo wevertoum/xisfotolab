@@ -2,23 +2,17 @@ import React, { memo, useCallback, useMemo, useState } from "react";
 import "./AnalyticsAdmin.less";
 import FadeLoading from "components/FadeLoading";
 import {
-  Button,
   Card,
   Col,
   Collapse,
   DatePicker,
-  Form,
   Result,
   Row,
   Space,
   Tabs,
 } from "antd";
 import locale from "antd/es/date-picker/locale/pt_BR";
-import {
-  SearchOutlined,
-  BarChartOutlined,
-  FileMarkdownOutlined,
-} from "@ant-design/icons";
+import { BarChartOutlined, FileMarkdownOutlined } from "@ant-design/icons";
 import { collection } from "utils/firebase";
 import moment, { Moment } from "moment";
 import { Pie } from "react-chartjs-2";
@@ -26,39 +20,33 @@ import Display from "components/Display";
 import CustomRate from "components/AvaliacaoItens/CustomRate";
 const { Panel } = Collapse;
 
-interface Notas {
-  a?: number;
-  b?: number;
-  c?: number;
-  d?: number;
-  e?: number;
-}
-
 const AnalyticsAdmin: React.FC = () => {
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [avaliacoes, setAvaliacoes] = useState<Models.Avaliacao[]>(
     [] as Models.Avaliacao[]
   );
+  const [dateSelected, setDateSelected] = useState<[Moment, Moment]>();
 
   const searchData = useCallback(async (range: Moment[]) => {
-    setLoading(true);
+    setDateSelected(range as [Moment, Moment]);
+    if (range) {
+      setLoading(true);
+      const initDate = range[0].toDate();
+      const finalDate = range[1].toDate();
 
-    const initDate = range[0].toDate();
-    const finalDate = range[1].toDate();
-
-    await collection("avaliacoes")
-      .where("data_avaliacao", ">=", initDate)
-      .where("data_avaliacao", "<=", finalDate)
-      .orderBy("data_avaliacao", "desc")
-      .onSnapshot((snapshot) => {
-        const avaliacoesApi: Models.Avaliacao[] = snapshot.docs.map((doc) =>
-          doc.data()
-        ) as Models.Avaliacao[];
-        console.log(avaliacoesApi);
-        setAvaliacoes(avaliacoesApi);
-        setLoading(false);
-      });
+      await collection("avaliacoes")
+        .where("data_avaliacao", ">=", initDate)
+        .where("data_avaliacao", "<=", finalDate)
+        .orderBy("data_avaliacao", "desc")
+        .onSnapshot((snapshot) => {
+          const avaliacoesApi: Models.Avaliacao[] = snapshot.docs.map((doc) =>
+            doc.data()
+          ) as Models.Avaliacao[];
+          console.log(avaliacoesApi);
+          setAvaliacoes(avaliacoesApi);
+          setLoading(false);
+        });
+    }
   }, []);
 
   const notasXis = useMemo(() => {
@@ -116,6 +104,7 @@ const AnalyticsAdmin: React.FC = () => {
   const HeaderFilters: React.FC = () => (
     <Space>
       <DatePicker.RangePicker
+        value={dateSelected}
         onChange={(e) => searchData(e as Moment[])}
         locale={locale}
         placeholder={["Data Inicial", "Data Final"]}
@@ -124,8 +113,6 @@ const AnalyticsAdmin: React.FC = () => {
         className="form-filter-item"
         size="large"
       />
-
-      <Button onClick={form.submit} icon={<SearchOutlined />} />
     </Space>
   );
 
