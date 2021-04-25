@@ -7,7 +7,7 @@ interface Props {
   loading: boolean;
   message?: string;
 }
-export default function ({ loading, message }: Props) {
+const FadeLoading = function ({ loading, message }: Props) {
   if (loading) {
     return (
       <section className="fade-loading">
@@ -17,3 +17,5 @@ export default function ({ loading, message }: Props) {
     );
   } else return <></>;
 }
+
+export default FadeLoading;
