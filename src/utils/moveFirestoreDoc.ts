@@ -1,6 +1,10 @@
 import { collection } from "utils/firebase";
 
-export default async function (fromRef: string, toRef: string, value: any) {
+const moveFirestoreDoc = async function (
+  fromRef: string,
+  toRef: string,
+  value: any
+) {
   const [path, id] = fromRef.split("/");
   try {
     await collection(toRef).doc(id).set(value);
@@ -14,4 +18,6 @@ export default async function (fromRef: string, toRef: string, value: any) {
     }
     console.error(errCopy);
   }
-}
+};
+
+export default moveFirestoreDoc;

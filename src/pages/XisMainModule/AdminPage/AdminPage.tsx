@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 import "./AdminPage.less";
 
-import { Layout, Menu } from "antd";
+import { Affix, Button, Layout, Menu } from "antd";
 import {
   UserOutlined,
   ClockCircleOutlined,
@@ -12,6 +12,7 @@ import {
   SettingOutlined,
   TagsOutlined,
   PieChartOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import ListPedidos from "components/ListPedidos";
 import PerfilAdmin from "components/PerfilAdmin";
@@ -21,9 +22,13 @@ import AnalyticsAdmin from "components/AnalyticsAdmin";
 
 const { Sider, Content } = Layout;
 
+const COLLAPSED_WIDTH = 80;
+const UNCOLLAPSED_WIDTH = 200;
+const COLLAPSE_ANIMATION = "all 0.2s linear";
+
 const AdminPage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  // const [editing, setEditing] = useState(false);
+  const [mobile, setMobile] = useState(false);
 
   const [currentComponent, setcurrentComponent] = useState<React.ReactNode>(
     <ListPedidos
@@ -38,13 +43,48 @@ const AdminPage: React.FC = () => {
 
   return (
     <Layout className="container-menu-sider">
+      {mobile && (
+        <Affix offsetTop={20}>
+          <Button
+            icon={<MenuOutlined />}
+            shape="circle"
+            size="large"
+            type="text"
+            onClick={() => setCollapsed((collapsed) => !collapsed)}
+          />
+        </Affix>
+      )}
       <Sider
+        breakpoint="lg"
+        onBreakpoint={(breaked) => {
+          setMobile(breaked);
+          setCollapsed(breaked);
+        }}
         theme="light"
         onCollapse={toggle}
         collapsible
         collapsed={collapsed}
+        collapsedWidth={mobile ? 0 : COLLAPSED_WIDTH}
+        style={{
+          height: "100%",
+          position: "fixed",
+          zIndex: 2,
+          left: 0,
+          overflow: "auto",
+          overflowX: "hidden",
+          transition: COLLAPSE_ANIMATION,
+        }}
       >
-        <Menu theme="light" mode="inline" defaultSelectedKeys={["2"]}>
+        <Menu
+          theme="light"
+          mode="inline"
+          defaultSelectedKeys={["2"]}
+          siderCollapsed={collapsed}
+          collapsedWidth={COLLAPSED_WIDTH}
+          style={{
+            transition: COLLAPSE_ANIMATION,
+          }}
+        >
           <Menu.Item
             onClick={() => setcurrentComponent(<PerfilAdmin />)}
             key="1"
@@ -145,12 +185,34 @@ const AdminPage: React.FC = () => {
         </Menu>
       </Sider>
       <Layout className="site-layout">
+        {mobile && !collapsed && (
+          <div
+            style={{
+              zIndex: 1,
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              top: 64,
+              left: 0,
+              background: "#0005",
+            }}
+            onClick={() => setCollapsed(true)}
+          />
+        )}
         <Content
           className="site-layout-background"
           style={{
             margin: "24px 16px",
             padding: 24,
             minHeight: 280,
+            transition: COLLAPSE_ANIMATION,
+            marginTop: 64,
+            marginLeft: mobile
+              ? 0
+              : collapsed
+              ? COLLAPSED_WIDTH
+              : UNCOLLAPSED_WIDTH,
+            background: "var(--background-color)",
           }}
         >
           {currentComponent}
