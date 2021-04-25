@@ -1,1 +1,5 @@
-export default [{ required: true, message: "Oops! Campo obrigatório" }];
+const defaultFormRules = [
+  { required: true, message: "Oops! Campo obrigatório" },
+];
+
+export default defaultFormRules;
