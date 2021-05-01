@@ -2,4 +2,4 @@ build
 node_modules
 .firebase
 .src/utils/firebase.js
-.src/utils/firebaseConfig.js
+firebaseConfig.js
